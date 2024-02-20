@@ -406,6 +406,8 @@ capacitor-cordova-ios-plugins
 App/App/capacitor.config.json
 App/App/config.xml
 
-svelte/.svelte-kit/*
-svelte/.npmrc
+client/.svelte-kit/*
+client/.npmrc
 .DS_Store
+database.ini
+client/.npmrc

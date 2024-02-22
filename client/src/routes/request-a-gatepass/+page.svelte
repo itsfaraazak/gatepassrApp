@@ -1,5 +1,10 @@
-<script>
-    /*
+<script lang=ts>
+    import { onMount } from 'svelte';
+    import type { PageData, ActionData } from './$types';
+	export let data: PageData;
+	export let form: ActionData;
+
+/*
     fetch("http://127.0.0.1:5000", {
         method: "GET",
         headers: {
@@ -28,7 +33,7 @@
         //request = data;
         console.log(request)
     });
-    */
+    
 
     async function getUsers() {
         let response = await fetch("http://127.0.0.1:5000");
@@ -36,7 +41,31 @@
         return users;
     }
     const promise = getUsers();
+ 
+
+    async function frmsubmit() {
+
+        let response = await fetch('http://127.0.0.1:5000/submitrequest', {
+        method: 'POST',
+        body: new FormData()
+        });
+
+        let result = await response.json();
+
+        alert(result.message);
+    };
+*/
+
+    let users: any[] = []
+
+    onMount( async () => {
+        fetch("http://127.0.0.1:5000/")
+            .then( response => response.json() )
+            .then( data => { users = data } )
+    });
+
     
+
 </script>
 
 <head>
@@ -135,7 +164,7 @@
 
 <body class="my-4 mx-4">
 
-<form action="http://127.0.0.1:5000/submitrequest" method="post">
+<form action = "http://127.0.0.1:5000/submitrequest" method="POST">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <h1 class="text-base font-semibold leading-7 text-gray-900">Request for a gatepass</h1>
@@ -151,6 +180,11 @@
 
                 <div class="mt-3 space-y-3">
                   <div class="flex items-center gap-x-3">
+                    {#each users as user}
+                        <input type="radio" id={user[0]} name="student_type" value={user[1]} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
+                        <label class="block text-sm font-medium leading-6 text-gray-900" for={user[0]}>{user[1]}</label>
+                    {/each}
+                    <!--
                     {#await promise}
                         <p>Loading...</p>
                     {:then user}
@@ -161,6 +195,7 @@
                     {:catch error}
                         <p style="color: red">{error.message}</p>
                     {/await}
+                    -->
                   </div>
                   
                 </div>

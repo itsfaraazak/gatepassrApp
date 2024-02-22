@@ -57,3 +57,16 @@ INSERT INTO approval_teachers
 VALUES
 (1, 'example@example.com', 1, 11, TRUE, TRUE)
 
+ALTER TABLE requests 
+ALTER COLUMN exit_time TYPE TIMESTAMP WITH TIME ZONE;
+ALTER COLUMN request_created_at TYPE TIMESTAMP WITH TIME ZONE;
+ALTER COLUMN request_updated_at TYPE TIMESTAMP WITH TIME ZONE;
+ALTER COLUMN approved_at TYPE TIMESTAMP WITH TIME ZONE;
+
+CREATE PROCEDURE insert_data(_student_name VARCHAR(100), _student_email VARCHAR(100), _student_grade VARCHAR(2), _student_type_id INTEGER, _exit_time TIMESTAMP WITH TIME ZONE)
+LANGUAGE SQL
+BEGIN ATOMIC
+  INSERT INTO requests(student_name, student_email, student_grade, student_type_id, exit_time)
+  VALUES (_student_name, _student_email, _student_grade, _student_type_id, _exit_time);
+END;
+

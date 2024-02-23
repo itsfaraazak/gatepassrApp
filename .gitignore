@@ -411,3 +411,6 @@ client/.npmrc
 .DS_Store
 database.ini
 client/.npmrc
+
+# Environment Variables (revelant for MS Entra ID)
+.env

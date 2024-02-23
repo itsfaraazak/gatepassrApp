@@ -1,11 +1,13 @@
-import connect as db
-
-query_requests = """SELECT req.student_name, req.student_email, student_grade, req.student_type_id, exit_time
+from . import connect as db
+#import connect as db
+"""
+query_requests = "SELECT req.student_name, req.student_email, student_grade, req.student_type_id, exit_time
 ,st_type.student_type,approved_by
 FROM requests req
 join public.student_type st_type
 on req.student_type_id = st_type.student_type_id
-"""
+"
+
 
 def get_request():
     cursor, conn = get_db_connection()
@@ -14,29 +16,38 @@ def get_request():
     disconnect(cursor, conn)
     return data
 
+"""
+
 def get_db_connection():
     config = db.load_config()
     conn = db.connect(config)
     cursor = conn.cursor()
     return cursor, conn
 
-def get_data(query):
+def query_db(query, is_stored_procedure = False):
     cursor, conn = get_db_connection()
     cursor.execute(query)
-    data = cursor.fetchall()
+    if is_stored_procedure == False:
+        data = cursor.fetchall()
+        disconnect(cursor, conn)
+        return data
+    else: pass
     disconnect(cursor, conn)
-    return data
+    
 
+"""
 def insert_request_data(data):
     cursor, conn = get_db_connection()
     exit_time = data['exit_time']
     grade = data['grade']
     #exit_time = unformat_exit_time.replace("T", " ")
-    query = f"""CALL insert_data('John Doe Student', 'studentEmail@example.com', '{grade}', 3, '{exit_time}');"""
+    query = f"CALL insert_data('John Doe Student', 'studentEmail@example.com', '{grade}', 3, '{exit_time}');"
     print(query)
     cursor.execute(query)
     disconnect(cursor, conn)
     return ""
+
+"""
 
 def disconnect(cursor, conn):
     conn.commit()
@@ -45,4 +56,4 @@ def disconnect(cursor, conn):
 
 
 
-get_request()
+# get_request()

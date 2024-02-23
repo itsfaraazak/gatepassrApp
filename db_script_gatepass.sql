@@ -70,3 +70,8 @@ BEGIN ATOMIC
   VALUES (_student_name, _student_email, _student_grade, _student_type_id, _exit_time);
 END;
 
+ALTER TABLE requests
+ADD COLUMN guardian_name VARCHAR(100),
+ADD COLUMN guardian_relation VARCHAR(100),
+ADD COLUMN guardian_email VARCHAR(100);
+

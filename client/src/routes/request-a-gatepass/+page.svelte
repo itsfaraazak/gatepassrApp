@@ -1,10 +1,14 @@
 <script lang=ts>
     import { onMount } from 'svelte';
+
+    /*
     import type { PageData, ActionData } from './$types';
+
+    
 	export let data: PageData;
 	export let form: ActionData;
 
-/*
+
     fetch("http://127.0.0.1:5000", {
         method: "GET",
         headers: {
@@ -56,15 +60,21 @@
     };
 */
 
-    let users: any[] = []
+    
+    let student_type: any[] = []
+    let student_grade_json: any[] =[]
+    let student_grade: any[] = []
 
     onMount( async () => {
-        fetch("http://127.0.0.1:5000/")
+        fetch("http://127.0.0.1:5000/recieve/studenttype")
             .then( response => response.json() )
-            .then( data => { users = data } )
+            .then( data => { student_type = data } )
+        fetch("http://127.0.0.1:5000/recieve/grades")
+            .then( response => response.json() )
+            .then( data => { student_grade = data } )
     });
 
-    
+    console.log(student_grade)    
 
 </script>
 
@@ -164,7 +174,7 @@
 
 <body class="my-4 mx-4">
 
-<form action = "http://127.0.0.1:5000/submitrequest" method="POST">
+<form action = "http://127.0.0.1:5000/submit/gatepassrequest" method="POST">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <h1 class="text-base font-semibold leading-7 text-gray-900">Request for a gatepass</h1>
@@ -180,8 +190,8 @@
 
                 <div class="mt-3 space-y-3">
                   <div class="flex items-center gap-x-3">
-                    {#each users as user}
-                        <input type="radio" id={user[0]} name="student_type" value={user[1]} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
+                    {#each student_type as user}
+                        <input type="radio" id={user[0]} name="student_type" value={user[0]} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
                         <label class="block text-sm font-medium leading-6 text-gray-900" for={user[0]}>{user[1]}</label>
                     {/each}
                     <!--
@@ -203,6 +213,20 @@
         </div>
 
         <!-- radio end -->
+
+        <!-- grade of student -->
+
+        <div class="col-span-full mt-8">
+            <label for="grade_select" class="text-base font-semibold leading-7 text-gray-900">Which grade are you in?</label>
+            <select name="grade" id="grade" class="mt-4 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option value="">Select your grade...</option>
+                {#each Object.entries(student_grade) as [numeric_grade, display_grade]}
+                    <option value={numeric_grade}>{display_grade}</option>
+                <!-- <option value={display_grade}>{display_grade}</option> -->
+                {/each}
+            </select>
+
+        <!-- grade of student end -->
 
         <!-- Exit time input -->
 

@@ -5,7 +5,7 @@
      */
     let requests = []
     onMount( async () => {
-        fetch("http://127.0.0.1:5000/getrequests")
+        fetch("http://127.0.0.1:5000/recieve/pendingrequests")
             .then( response => response.json() )
             .then( data => { requests = data } )
     });

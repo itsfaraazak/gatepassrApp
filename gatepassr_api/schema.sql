@@ -145,3 +145,21 @@ ALTER PROCEDURE public.insert_data(character varying, character varying, charact
     OWNER TO gp_admin;
 
 
+CREATE TABLE IF NOT EXISTS user_accounts (
+  user_id SERIAL PRIMARY KEY, 
+  username VARCHAR (50) UNIQUE NOT NULL, 
+  password VARCHAR (100) NOT NULL, 
+  email VARCHAR (100) UNIQUE NOT NULL, 
+  created_at TIMESTAMP NOT NULL, 
+  last_login TIMESTAMP
+);
+
+SELECT * FROM user_accounts
+
+CREATE PROCEDURE register_user(username varchar, password varchar, email varchar)
+LANGUAGE SQL
+BEGIN ATOMIC
+  INSERT INTO user_accounts(username, password, email) VALUES ('username', 'password', 'email');
+END;
+
+

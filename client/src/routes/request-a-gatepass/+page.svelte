@@ -175,16 +175,16 @@
 <body class="my-4 mx-4">
 
 <form action = "http://127.0.0.1:5000/submit/gatepassrequest" method="POST">
-    <div class="space-y-12">
+    <div class="space-y-4">
       <div class="border-b border-gray-900/10 pb-12">
-        <h1 class="text-base font-semibold leading-7 text-gray-900">Request for a gatepass</h1>
-        <p class="mt-1 text-sm leading-6 text-gray-600">This information is required to process your gatepass.</p>
+        <h1 class="text-2xl font-semibold leading-7 text-gray-900">Request for a gatepass</h1>
+        <!-- <p class="mt-1 text-sm leading-6 text-gray-600">This information is required to process your gatepass.</p> -->
   
         <!-- radios -->
 
-        <div class="col-span-full mt-8">
+        <div class="col-span-full mt-6">
             <h2 class="text-base font-semibold leading-7 text-gray-900">You are a...</h2>
-            <p class="mt-1 text-sm leading-6 text-gray-600">A day scholar student returns home every day, a weekly boarder returns every week and a boarder returns every term.</p>
+            
     
             <div class="mt-3 space-y-6">
 
@@ -254,7 +254,7 @@
 
         <div class="border-b border-gray-900/10 pb-12">
             <h2 class="text-base font-semibold leading-7 text-gray-900 mt-8">Who will pick you up?</h2>
-            <p class="mt-1 text-sm leading-6 text-gray-600">Enter information correctly to ensure no hassles at pick-up.</p>
+        
       
             <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div class="sm:col-span-3">

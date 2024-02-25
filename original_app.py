@@ -1,12 +1,19 @@
 from flask import Flask, jsonify, request, redirect
 import logging
+from . import get_data
+from . import post_data
 
 import sys
 sys.path.insert(0, "database")
 
 from database import data
 
+
 app = Flask(__name__)
+
+app.register_blueprint(get_data.bp)
+app.register_blueprint(post_data.bp)
+
 
 @app.route("/")
 def hello_world():
@@ -61,7 +68,29 @@ def get_grades():
     request = jsonify(grades)
     request.headers.add("Access-Control-Allow-Origin", "*")
     return request
-    
+
+@app.route("/signin", methods = ["GET","POST"])   
+def signin():
+    form_data = {
+        "student_type": request.form["email"],
+        "grade": request.form["password"]
+    }
+    print("hello")
+    post_data.authenticateuser(form_data)
+
+    return redirect("http://localhost:5173/request-a-gatepass")
+
+
+
+@app.route("/register", methods = ["GET","POST"])   
+def registeruser():
+    form_data = {
+        "student_type": request.form["email"],
+        "grade": request.form["password"]
+    }
+    data.registeruser(form_data)
+    return redirect("http://localhost:5173/request-a-gatepass")
+
 
 
 if __name__ == '__main__':

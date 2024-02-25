@@ -1,0 +1,92 @@
+import identity
+import identity.web
+import requests
+from flask import (
+    Blueprint, Flask, redirect, render_template, request, session, url_for
+)
+from flask import current_app
+from flask_session import Session
+#import __init__ as i
+from . import config
+
+bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+__version__ = "0.7.0" # for easier debugging, can be changed
+#print(current_app.app_context)
+
+current_app.config.from_object(config)
+assert current_app.config["REDIRECT_PATH"] != "/", "REDIRECT_PATH must not be /"
+Session(current_app.app)
+
+# This section is needed for url_for("foo", _external=True) to automatically
+        # generate http scheme when this sample is running on localhost,
+        # and to generate https scheme when it is deployed behind reversed proxy.
+        # See also https://flask.palletsprojects.com/en/2.2.x/deploying/proxy_fix/
+from werkzeug.middleware.proxy_fix import ProxyFix
+current_app.app.wsgi_app = ProxyFix(current_app.wsgi_app, x_proto=1, x_host=1)
+
+current_app.app.jinja_env.globals.update(Auth=identity.web.Auth)  # Useful in template for B2C
+auth = identity.web.Auth(
+    session=session,
+        authority=current_app.config["AUTHORITY"],
+        client_id=current_app.config["CLIENT_ID"],
+        client_credential=current_app.config["CLIENT_SECRET"],
+    )
+
+
+
+@bp.route("/login")
+def login():
+    with current_app.app_context():
+        current_app.j
+
+        return render_template("login.html", version="0.7.0", **auth.log_in(
+            scopes=current_app.app_config.SCOPE, # Have user consent to scopes during log-in
+            redirect_uri=url_for("auth_response", _external=True), # Optional. If present, this absolute URL must match your bp's redirect_uri registered in Azure Portal
+            prompt="select_account",  # Optional. More values defined in  https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest
+        ))
+
+
+@bp.route("/getAToken")#current_app.app_config.REDIRECT_PATH
+def auth_response():
+    result = current_app.auth.complete_log_in(request.args)
+    if "error" in result:
+        return redirect("http://localhost:5173/sign-in", result=result) # change for an auth error page
+        #return render_template("auth_error.html", result=result)
+    return redirect("http://localhost:5173/request-a-gatepass") # sucess URL
+
+
+@bp.route("/logout")
+def logout():
+    #return redirect(auth.log_out(url_for("index", _external=True)))
+    return redirect(current_app.auth.log_out("http://localhost:5173")) # log out URL
+
+
+@bp.route("/")
+def index():
+    #if not (bp.config["CLIENT_ID"] and bp.config["CLIENT_SECRET"]):
+        # This check is not strictly necessary.
+        # You can remove this check from your production code. -- removed
+        #return render_template('config_error.html')
+    if not current_app.auth.get_user():
+        return redirect("http://localhost:5173/sign-in")
+        #return redirect(url_for("login"))
+    #return render_template('index.html', user=auth.get_user(), version=__version__)
+    return redirect("http://localhost:5173/home", user=auth.get_user(), version=__version__)
+
+
+"""
+@bp.route("/call_downstream_api")
+def call_downstream_api():
+    token = auth.get_token_for_user(current_app.app_config.SCOPE)
+    if "error" in token:
+        return redirect(url_for("login"))
+    # Use access token to call downstream api
+    api_result = requests.get(
+        current_app.app_config.ENDPOINT,
+        headers={'Authorization': 'Bearer ' + token['access_token']},
+        timeout=30,
+    ).json()
+    return render_template('display.html', result=api_result)
+
+"""

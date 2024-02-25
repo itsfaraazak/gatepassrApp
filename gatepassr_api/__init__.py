@@ -9,6 +9,7 @@ import requests
 from flask_session import Session
 
 from . import config
+auth_test:any
 
 def create_app(test_config=None):
     # create and configure the app
@@ -19,20 +20,35 @@ def create_app(test_config=None):
     )
 
     if test_config is None:
+        # config for authentication
         # load the instance config, if it exists, when not testing
+        """
         app.config.from_object(config)
+        assert app.config["REDIRECT_PATH"] != "/", "REDIRECT_PATH must not be /"
         Session(app)
 
+        # This section is needed for url_for("foo", _external=True) to automatically
+        # generate http scheme when this sample is running on localhost,
+        # and to generate https scheme when it is deployed behind reversed proxy.
+        # See also https://flask.palletsprojects.com/en/2.2.x/deploying/proxy_fix/
+        from werkzeug.middleware.proxy_fix import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+        app.jinja_env.globals.update(Auth=identity.web.Auth)  # Useful in template for B2C
         auth = identity.web.Auth(
             session=session,
             authority=app.config["AUTHORITY"],
             client_id=app.config["CLIENT_ID"],
-            client_credential=app.config["CLIENT_SECRET"]
+            client_credential=app.config["CLIENT_SECRET"],
         )
-
+        auth_test = auth
+        """
+        #app.config.from_pyfile('config.py', silent=True)
+        pass # for now...
     else:
         # load the test config if passed in
-        app.config.from_mapping(test_config)
+        #app.config.from_mapping(test_config)
+        pass # for now again...
 
     # ensure the instance folder exists
     try:
@@ -51,5 +67,7 @@ def create_app(test_config=None):
     app.register_blueprint(get_data.bp)
     app.register_blueprint(post_data.bp)
     app.register_blueprint(auth.bp)
+    #with app.app_context():
+    #    app.register_blueprint(auth.bp)
 
     return app

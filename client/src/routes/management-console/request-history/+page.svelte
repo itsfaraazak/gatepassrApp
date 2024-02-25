@@ -1,9 +1,13 @@
 <script>
-    import { onMount } from 'svelte';
+// @ts-nocheck
+
+    import { json, redirect } from '@sveltejs/kit';
+import { onMount } from 'svelte';
     /**
      * @type {any[]}
      */
     let requests = []
+    let return_status;
     onMount( async () => {
         fetch("http://127.0.0.1:5000/recieve/pendingrequests")
             .then( response => response.json() )
@@ -20,7 +24,71 @@
         btn_close_mobile_menu?.classList.toggle("block");
         btn_close_mobile_menu?.classList.toggle("hidden");
     }
+
+  
+  function approveRequest(request_id) {
+      console.log(request_id);
+      /*
+      const bodydata = {
+          request_id: request_id,
+          name: request_id,
+          email: "abc@awesome.com"
+        };
+      request_id = 1
+      console.log(JSON.stringify(bodydata));
+      const updateData = async () => {
+        const response = await fetch('localhost:5000/submit/approverequest', {
+            method: 'GET',
+            headers: {
+              'Content-Type': "text/html"
+            },
+            body: request_id  // the variable dataToSend can be a 'string' or an {object} that comes from somewhere else in our application
+        });
+      if (response.ok) {
+          const data = await response.json();
+          console.log(data)
+          return data;
+      } 
+      else 
+      {
+          console.log('error: ', response.status, response.statusText);
+          /* Handle the error returned by the HTTP request */
+         // return {error: {status: response.status, statusText: response.statusText}};
+     // };
+   // };
     
+      let response =  fetch("http://127.0.0.1:5000/submit/approverequest",{
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "no-cors", // no-cors, *cors, same-origin
+        //cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        //credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "text/plain",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        Accept: "text/plain",
+        //redirect: "follow", // manual, *follow, error
+        //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        //body: '{"request": "'+ request_id +'"}'
+        body: request_id
+      });
+
+      response.then(data =>return_status=data)
+		  //return_status = (json)
+      console.log(return_status)
+      if (response.ok) {
+          //const data =  response.json();
+          console.log(response.data)
+          //return data;
+      } 
+      else 
+      {
+          console.log('error: ', response.status, response.statusText);
+          /* Handle the error returned by the HTTP request */
+         // return {error: {status: response.status, statusText: response.statusText}};
+      };
+  }
+   
 </script>
 
 <html lang="en-US" class="h-full bg-gray-100">
@@ -89,7 +157,7 @@
                     <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                       <!-- Active: "bg-gray-100", Not Active: "" -->
                       <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                      <!--<a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>-->
                       <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
                     </div>
                   </div>
@@ -160,7 +228,7 @@
         <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
           <div class="min-w-0 flex-1">
             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-2.5xl sm:tracking-tight">Pending Requests</h2>
-            <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+            <!--<div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
               <div class="mt-2 flex items-center text-sm text-gray-500">
                 <svg class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z" clip-rule="evenodd" />
@@ -187,7 +255,7 @@
                 </svg>
                 Closing on January 9, 2020
               </div>
-            </div>
+            </div>-->
           </div>
           <div class="mt-5 flex lg:ml-4 lg:mt-0">
             <span class="hidden sm:block">
@@ -199,7 +267,7 @@
               </button>
             </span>
         
-            <span class="ml-3 hidden sm:block">
+            <!--<span class="ml-3 hidden sm:block">
               <button type="button" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 <svg class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z" />
@@ -207,7 +275,7 @@
                 </svg>
                 View
               </button>
-            </span>
+            </span>-->
         
             <span class="sm:ml-3">
               <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -251,7 +319,7 @@
         <div class="mx-4 my-4 relative flex flex-col w-full h-full text-gray-700 bg-white shadow-md rounded-xl bg-clip-border">
           <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
             <div class="flex items-center justify-between gap-8 mb-8">
-              <div>
+              <!--<div>
                 <h5
                   class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                   List of pending requests
@@ -259,14 +327,14 @@
                 <p class="block mt-1 font-sans text-base antialiased font-normal leading-relaxed text-gray-700">
                   See all pending gatepass requests by students
                 </p>
-              </div>
+              </div>-->
               <div class="flex flex-col gap-2 shrink-0 sm:flex-row">
                 <button
                   class="select-none rounded-lg border border-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button">
                   view all
                 </button>
-                <button
+                <!--<button
                   class="flex select-none items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                   type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
@@ -276,7 +344,7 @@
                     </path>
                   </svg>
                   Add member
-                </button>
+                </button>-->
               </div>
             </div>
             <div class="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -349,14 +417,16 @@
                   </th>
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                      Exit Time
+                      Requested Exit Time
                     </p>
                   </th>
+                  <!--
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                       Type
                     </p>
                   </th>
+                -->
                   <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                     <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
                       Actions
@@ -391,7 +461,7 @@
                       </p>
                       <p
                         class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                        Organization
+                        {r[5]}
                       </p>
                     </div>
                   </td>
@@ -410,7 +480,7 @@
                       {#if r[6] == null}
                         <div
                         class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-md select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
-                        <span class="status">pending</span>
+                        <span class="status">Pending</span>
                       </div>
                       {:else}
                         <div
@@ -422,23 +492,28 @@
                   </td>
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                      {r[4]}
+                      {r[4].substring(0,16)}
                     </p>
+                    <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
+                    {r[4].substring(16)}
+                  </p>
                   </td>
+                  <!--
                   <td class="p-4 border-b border-blue-gray-50">
                     <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
                       {r[5]}
                     </p>
                   </td>
+                -->
                   
                   <td class="p-4 border-b border-blue-gray-50">
+
                     {#if r[6] == null}
-                      <button
+                      <button name="btnapprove"
                         class="relative h-10 w-full select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        type="button">
-                        
-                        <p>Approve</p>
-                      </button>
+                        type="button" on:click={approveRequest(r[7])} id={r[7]}>
+                        <span>Approve</span>
+                    </button>
                     {:else}
                       <button
                         class="relative h-10 w-full select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

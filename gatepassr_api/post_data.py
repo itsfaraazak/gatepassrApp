@@ -1,3 +1,4 @@
+import json
 from flask import (
     Flask, jsonify, request, redirect, Blueprint
 )
@@ -28,3 +29,29 @@ def sumbit_request():
         print(query)
         print(form_data)
         return redirect("http://localhost:5173/request-a-gatepass")
+
+@bp.route("/approverequest", methods=["POST"])
+def approve_gatepass_request():
+    print("test")
+    #print(request.form['btnapprove'])
+    content_type = request.headers.get('Content-Type')
+    print(content_type)
+    if (content_type == 'application/json'):
+        req = request.json
+        print(req)
+    else:
+        print('Json Content-Type not supported!')
+        #requestid = (request.data)
+        requestid = int(request.data.decode("utf-8"))
+        print(requestid)
+    try:
+        #query = "UPDATE requests SET approved_by = 'teacher@example.com', approved_at = NOW() WHERE request_id = 3;"
+        query=f"""CALL approve_request({requestid},'teacher@abc.com');"""
+        print(query)
+        data.query_db(query, True)
+        print("ok")
+        return "success"
+    except Exception as e:
+        print(f"Error: {e}")
+        return "try again"
+    

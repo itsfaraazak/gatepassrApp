@@ -16,8 +16,14 @@ def student_type():
 
 @bp.route("/allrequests", methods = ["GET"])
 def requests():
-    query_requests = """SELECT req.student_name, req.student_email, student_grade, req.student_type_id, exit_time
-,st_type.student_type,approved_by
+    query_requests = """SELECT req.student_name, 
+    req.student_email, 
+    student_grade, 
+    req.student_type_id,
+    exit_time,
+    st_type.student_type,
+    approved_by,
+    req.request_id
 FROM requests req
 join public.student_type st_type
 on req.student_type_id = st_type.student_type_id"""
@@ -29,8 +35,14 @@ on req.student_type_id = st_type.student_type_id"""
 
 @bp.route("/pendingrequests", methods = ["GET"])
 def request():
-    query_requests = """SELECT req.student_name, req.student_email, student_grade, req.student_type_id, exit_time
-,st_type.student_type,approved_by
+    query_requests = """SELECT req.student_name,
+      req.student_email, 
+      student_grade, 
+      req.student_type_id, 
+      exit_time,
+    st_type.student_type,
+    approved_by,
+    req.request_id
 FROM requests req
 join public.student_type st_type
 on req.student_type_id = st_type.student_type_id

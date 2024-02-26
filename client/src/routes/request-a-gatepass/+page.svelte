@@ -1,4 +1,6 @@
 <script lang=ts>
+    import { gatepassrAPI } from "$lib/gatepassrAPI"
+    import NoWorkResult from 'postcss/lib/no-work-result';
     import { onMount } from 'svelte';
 
     /*
@@ -60,21 +62,24 @@
     };
 */
 
-    
+    // let now = new Date()
+    // console.log(now)
     let student_type: any[] = []
     let student_grade_json: any[] =[]
     let student_grade: any[] = []
 
     onMount( async () => {
-        fetch("http://127.0.0.1:5000/recieve/studenttype")
+        fetch(gatepassrAPI + "/recieve/studenttype")
             .then( response => response.json() )
             .then( data => { student_type = data } )
-        fetch("http://127.0.0.1:5000/recieve/grades")
+        fetch(gatepassrAPI + "/recieve/grades")
             .then( response => response.json() )
             .then( data => { student_grade = data } )
     });
 
     console.log(student_grade)    
+
+    // var x = document.getElementById("exit-time").max = now;
 
 </script>
 
@@ -174,7 +179,7 @@
 
 <body class="my-4 mx-4">
 
-<form action = "http://127.0.0.1:5000/submit/gatepassrequest" method="POST">
+<form action = "{gatepassrAPI}/submit/gatepassrequest" method="POST">
     <div class="space-y-4">
       <div class="border-b border-gray-900/10 pb-12">
         <h1 class="text-2xl font-semibold leading-7 text-gray-900">Request for a gatepass</h1>

@@ -18,14 +18,14 @@ def get_request():
 
 """
 
-def get_db_connection():
-    config = db.load_config()
-    conn = db.connect(config)
-    cursor = conn.cursor()
-    return cursor, conn
+#def get_db_connection():
+#    config = db.load_config()
+#    conn = db.connect(config)
+#    cursor = conn.cursor()
+#    return cursor, conn
 
 def query_db(query, is_stored_procedure = False):
-    cursor, conn = get_db_connection()
+    cursor, conn = db.connect()
     cursor.execute(query)
     if is_stored_procedure == False:
         data = cursor.fetchall()

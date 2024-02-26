@@ -1,3 +1,4 @@
+@import 'node_modules/@ibm/plex/css/ibm-plex.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,13 +1,14 @@
 <script lang=ts>
-    let openMenu = false;
-    function openHamburgerMenu() {
-        var element = document.getElementById("mobile-nav");
-        element?.classList.remove("hidden");
-    }
-    function closeHamburgerMenu() {
-        var element = document.getElementById("mobile-nav");
-        element?.classList.add("hidden");
-    }
+  import { gatepassrAPI } from "$lib/gatepassrAPI"
+  let openMenu = false;
+  function openHamburgerMenu() {
+      var element = document.getElementById("mobile-nav");
+      element?.classList.remove("hidden");
+  }
+  function closeHamburgerMenu() {
+      var element = document.getElementById("mobile-nav");
+      element?.classList.add("hidden");
+  }
   let apiurl='http://127.0.0.1:5000'
   //let weburl='http://localhost:5173'
 </script>

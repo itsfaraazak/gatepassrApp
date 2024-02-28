@@ -85,7 +85,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Apply for a gatepass</title>
 </head>
 
@@ -177,7 +177,7 @@
   ```
 -->
 
-<body class="my-4 mx-4">
+<body class="my-10 mx-4">
 
 <form action = "{gatepassrAPI}/submit/gatepassrequest" method="POST">
     <div class="space-y-4">

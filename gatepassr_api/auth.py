@@ -16,10 +16,10 @@ def process_sign_up():
     }
     print("Registration - form data recieved")
     print(f"email is {form_data['email']} and password is {form_data['passwd']}")
+    passwordhash = generate_password_hash(form_data['passwd'], method='pbkdf2:sha256', salt_length=8)
+    print(passwordhash)
     
     try:
-        passwordhash = generate_password_hash(form_data['passwd'], method='pbkdf2:sha256')
-        print(passwordhash)
         query =f"CALL register_user('{form_data['username']}', '{passwordhash}', '{form_data['email']}');"
         print(query)
         data.query_db(query, True)
@@ -39,11 +39,11 @@ def sign_in():
     }
     print("Sign in - form data recieved")
     print(f"email is {form_data['email']} and password is {form_data['passwd']}")
-    passwordhash = generate_password_hash(form_data['passwd'], method='pbkdf2:sha256')
+    passwordhash = generate_password_hash(form_data['passwd'], method='pbkdf2:sha256', salt_length=8)
+    print(passwordhash)
     try:
         #passwordhash = generate_password_hash(form_data['passwd'], method='pbkdf2:sha256')
         query =f"CALL check_user('{form_data['email']}', '{passwordhash}');"
-        print(passwordhash)
         data.query_db(query, True)
         return redirect("http://localhost:5173/request-a-gatepass")
     except Exception as error:

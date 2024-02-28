@@ -66,9 +66,12 @@ def create_app(test_config=None):
     from . import get_data
     from . import post_data
     from . import auth
+    from . import qr_handling
+
     app.register_blueprint(get_data.bp)
     app.register_blueprint(post_data.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(qr_handling.bp)
     #with app.app_context():
     #    app.register_blueprint(auth.bp)
     

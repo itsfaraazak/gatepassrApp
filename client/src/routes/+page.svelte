@@ -9,7 +9,7 @@
       var element = document.getElementById("mobile-nav");
       element?.classList.add("hidden");
   }
-  let apiurl='http://127.0.0.1:5000'
+  //let apiurl='http://127.0.0.1:5000'
   //let weburl='http://localhost:5173'
 </script>
 <html lang="en-US">
@@ -17,7 +17,7 @@
         <meta charset="utf-8"/>
         <title>Welcome to Gatepassr</title>
     </head>
-    <body>
+    <body class="my-10 mx-4">
         <div class="bg-white">
             <header class="absolute inset-x-0 top-0 z-50">
               <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">

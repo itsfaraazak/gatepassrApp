@@ -163,3 +163,71 @@ BEGIN ATOMIC
 END;
 
 
+CREATE OR REPLACE PROCEDURE public.check_user(
+	IN _password character varying,
+	IN _email character varying,
+    INOUT _val INT DEFAULT null)
+LANGUAGE 'sql'
+
+BEGIN ATOMIC
+	SELECT COUNT(username) as val FROM public.user_accounts
+	WHERE email =_email
+	AND password =_password
+	LIMIT 1;
+END;
+
+CREATE OR REPLACE PROCEDURE public.approve_request(
+	IN _requestid integer,
+    IN _approvedby varchar(100))
+LANGUAGE 'sql'
+AS $BODY$
+	UPDATE requests 
+	SET approved_by = _approvedby,
+	approved_at = NOW() 
+	WHERE request_id = _requestid;
+$BODY$;
+ALTER PROCEDURE public.approve_request(integer)
+    OWNER TO gp_admin;
+
+
+CREATE OR REPLACE FUNCTION get_todays_requests()
+RETURNS TABLE (reqid INT,
+			   stname VARCHAR, 
+			   stemail VARCHAR,
+			   stgrade VARCHAR,
+			   sttypeid INT,
+			   exittime TIMESTAMPTZ,
+			   approvedby VARCHAR,
+			   approvedat TIMESTAMPTZ,
+			   createdat TIMESTAMPTZ,
+			   updatedon TIMESTAMPTZ, 
+			   gdname VARCHAR,
+			   gdrelation VARCHAR,
+			   gdemail VARCHAR,
+			   reqreason VARCHAR)
+LANGUAGE plpgsql
+AS
+$$
+BEGIN
+	RETURN QUERY
+	SELECT
+		request_id as reqid,
+		student_name as stname,
+		student_email as stemail,
+		student_grade as stgrade,
+		student_type_id as sttypeid,
+		exit_time as exittime,
+		approved_by as approvedby,
+		approved_at as approvedat,
+		request_created_at as createdat,
+		request_updated_at as updatedon,
+		guardian_name as gdname,
+		guardian_relation as gdrelation,
+		guardian_email as gdemail,
+		reason as reqreason
+	FROM
+		requests
+	WHERE
+		DATE(exit_time) = CURRENT_DATE;
+end;
+$$;

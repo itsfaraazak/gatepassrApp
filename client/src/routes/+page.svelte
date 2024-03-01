@@ -1,6 +1,8 @@
 <script lang=ts>
   import { gatepassrAPI } from "$lib/gatepassrAPI"
   let openMenu = false;
+  
+  /*
   function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
       element?.classList.remove("hidden");
@@ -9,9 +11,9 @@
       var element = document.getElementById("mobile-nav");
       element?.classList.add("hidden");
   }
-  //let apiurl='http://127.0.0.1:5000'
-  //let weburl='http://localhost:5173'
+  */
 </script>
+
 <html lang="en-US">
     <head>
         <meta charset="utf-8"/>
@@ -19,6 +21,7 @@
     </head>
     <body class="my-10 mx-4">
         <div class="bg-white">
+          <!--
             <header class="absolute inset-x-0 top-0 z-50">
               <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1">
@@ -45,9 +48,9 @@
                   <a href="/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
                 </div>
               </nav>
-              <!-- Mobile menu, show/hide based on menu open state -->
+               Mobile menu, show/hide based on menu open state 
               <div class="hidden" id="mobile-nav" role="dialog" aria-modal="true">
-                 <!-- Background backdrop, show/hide based on slide-over state. -->
+                  Background backdrop, show/hide based on slide-over state. 
                 <div class="fixed inset-0 z-50"></div>
                 <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                   <div class="flex items-center justify-between">
@@ -77,7 +80,7 @@
                   </div>
                 </div>
               </div>
-            </header>
+            </header> -->
             
             <div class="relative isolate px-6 pt-14 lg:px-8">
               <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">

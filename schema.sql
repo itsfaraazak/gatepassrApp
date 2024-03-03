@@ -231,3 +231,31 @@ BEGIN
 		DATE(exit_time) = CURRENT_DATE;
 end;
 $$;
+
+-- FUNCTION: public.check_user(character varying)
+
+-- DROP FUNCTION IF EXISTS public.check_user(character varying);
+
+CREATE OR REPLACE FUNCTION public.check_user(
+	_email character varying)
+    RETURNS TABLE(useremail character varying, passwordhash character varying) 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+BEGIN
+	RETURN QUERY
+	SELECT
+		email  as useremail,
+		password as passwordhash
+	FROM
+		public.user_accounts
+	WHERE
+		email =_email;
+end;
+$BODY$;
+
+ALTER FUNCTION public.check_user(character varying)
+    OWNER TO gp_admin;

@@ -22,7 +22,8 @@ def sumbit_request():
 # update stored procedure for processing guardian details and email + reason
     try:
         print(query)
-        data.query_db(query, True)
+        #data.query_db(query, True)
+        data.commandquery(query)
         print(form_data)
         return redirect("http://localhost:5173")
     except:
@@ -48,7 +49,7 @@ def approve_gatepass_request():
         #query = "UPDATE requests SET approved_by = 'teacher@example.com', approved_at = NOW() WHERE request_id = 3;"
         query=f"""CALL approve_request({requestid},'teacher@abc.com');"""
         print(query)
-        data.query_db(query, True)
+        data.commandquery(query)
         print("ok")
         return "success"
     except Exception as e:

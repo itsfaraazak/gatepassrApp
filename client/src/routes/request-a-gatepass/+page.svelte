@@ -5,15 +5,17 @@
     let student_type: any[] = []
     let student_grade_json: any[] =[]
     let student_grade: any[] = []
-
+    let useremail =""
     onMount( async () => {
-        fetch(gatepassrAPI + "/recieve/studenttype")
-            .then( response => response.json() )
-            .then( data => { student_type = data } )
+        // fetch(gatepassrAPI + "/recieve/studenttype")
+        //     .then( response => response.json() )
+        //     .then( data => { student_type = data } )
         fetch(gatepassrAPI + "/recieve/grades")
             .then( response => response.json() )
             .then( data => { student_grade = data } )
-    });
+            let bearer =(localStorage.getItem("jwtToken"))
+       
+   });
 
 </script>
 
@@ -45,6 +47,8 @@
                 <div class="border-b border-gray-900/10 pb-12">
                     <h1 class="text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Request for a gatepass</h1>
                     <div class="col-span-full mt-5">
+            
+                        
                         <h2 class="text-base font-semibold leading-7 text-gray-900">You are a...</h2>
                         
                 
@@ -52,10 +56,17 @@
 
                             <div class="mt-3 space-y-3">
                             <div class="flex items-center gap-x-3">
-                                {#each student_type as user}
+                                <input type="radio" id="1" name="student_type" value="1" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
+                                    <label class="block text-sm font-medium leading-6 text-gray-900" for="1">Day Scholar</label>
+                                <input type="radio" id="2" name="student_type" value="2" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
+                                    <label class="block text-sm font-medium leading-6 text-gray-900" for="2">Weekly Boarder</label>
+                                <input type="radio" id="3" name="student_type" value="3" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
+                                    <label class="block text-sm font-medium leading-6 text-gray-900" for="3">Boarder</label>
+
+                                <!-- {#each student_type as user}
                                     <input type="radio" id={user[0]} name="student_type" value={user[0]} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
                                     <label class="block text-sm font-medium leading-6 text-gray-900" for={user[0]}>{user[1]}</label>
-                                {/each}
+                                {/each} -->
                             </div>
                             
                             </div>

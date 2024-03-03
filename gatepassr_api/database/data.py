@@ -28,12 +28,25 @@ def query_db(query, is_stored_procedure = False):
     cursor, conn = db.connect()
     cursor.execute(query)
     if is_stored_procedure == False:
+        print("2")
         data = cursor.fetchall()
         disconnect(cursor, conn)
         return data
-    else: pass
+    else:
+        print("1")
+        data = cursor.fetchone()
+        print(data)
+        disconnect(cursor, conn)
+        return data
+    #else: pass
     disconnect(cursor, conn)
-    
+
+def commandquery(query):
+    print("command query")
+    cursor, conn = db.connect()
+    cursor.execute(query)
+    disconnect(cursor, conn)
+    return ""
 
 """
 def insert_request_data(data):

@@ -7,11 +7,7 @@
     onMount(async () => {
         // @ts-ignore
         let bearer =(localStorage.getItem("jwtToken"))
-        console.log("protected page " +bearer)
-
-        //let url = gatepassrAPI + "/auth/protected?Authorization='Bearer' "+ bearer +"'";
-        //console.log(url)
-       // const response = await fetch(url, {
+       
         const response = await fetch(gatepassrAPI + '/auth/protected', {
             method: 'GET',
             // @ts-ignore
@@ -23,11 +19,6 @@
             },
             // @ts-ignore
             xhrFields: { withCredentials: true},
-            //withCredentials: true,
-            //credentials: 'include',
-            //credentials: 'include',
-            
-             // Include cookies in the request
         });
 
         if (response.ok) {
@@ -47,5 +38,5 @@
 
 <div>
     <h2>Protected Route</h2>
-    <p>{message}</p>
+    <p>Welcome {message}</p>
 </div>

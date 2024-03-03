@@ -12,25 +12,10 @@ let res='';
     let email = '';
    // let password = '';
    // let token = '';
-   import bcrypt from 'bcryptjs';
-
+   
    const numSaltRounds = 8;
    //action="{rooturlflask}/auth/requestregistration"
     const register = async () => {
-       //const hash = bcryptjs.hash(password, numSaltRounds);
-       
-       res = await bcrypt.hash(password, numSaltRounds)
-                    // @ts-ignore
-                    .then(result => {
-                        console.log('Result from promise:', result);
-                        password = result
-                    })
-                    // @ts-ignore
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Handle errors if the promise is rejected
-                    });
-        console.log(res)     
         const response = await fetch(gatepassrAPI + '/auth/requestregistration', {
             method: 'POST',
             headers: {
@@ -76,13 +61,13 @@ let res='';
                 <div>
                     <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
                     <div class="mt-2">
-                        <input id="username" bind:value={username} name="username" type="text"  required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input id="username" bind:value={username}  type="text"  required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     </div>
                 <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" bind:value={email} type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input id="email" bind:value={email} type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
                 </div>
         
@@ -94,7 +79,7 @@ let res='';
                     </div>
                 </div>
                 <div class="mt-2">
-                    <input id="password" bind:value={password} name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input id="password" bind:value={password} type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
                 </div>
         

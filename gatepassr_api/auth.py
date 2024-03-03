@@ -42,7 +42,7 @@ def process_sign_up():
     # logging
 """
 
-bp.route("/requestregistration", methods = ["GET","POST"])
+@bp.route("/requestregistration", methods = ["POST"])
 def process_sign_up():
     print(request.data)
 
@@ -56,14 +56,15 @@ def process_sign_up():
     print(sign_up_data)
     print("Registration - form data recieved")
     print(f"email is {sign_up_data['email']} and password is {sign_up_data['password']}")
-   # passwordhash = generate_password_hash(sign_up_data['passwd'], method='pbkdf2:sha256', salt_length=8)
+    passwordhash = generate_password_hash(sign_up_data['password'], method='pbkdf2:sha256', salt_length=8)
     #passwordhash =form_data['password']
-    #print(passwordhash)
-    
+    print("1st hash",passwordhash)
+    passwordhash2 = generate_password_hash(sign_up_data['password'], method='pbkdf2:sha256', salt_length=8)
+    print("2nd hash",passwordhash2)
     try:
-        query =f"CALL register_user('{sign_up_data['username']}', '{sign_up_data['password']}', '{sign_up_data['email']}');"
+        query =f"CALL register_user('{sign_up_data['username']}', '{passwordhash}', '{sign_up_data['email']}');"
         print(query)
-        data.query_db(query, True)
+        data.commandquery(query)
         return redirect("http://localhost:5173/auth/request-a-gatepass")
     except Exception as error:
         print(error)
@@ -100,7 +101,7 @@ def sign_in():
 @bp.route("/signin", methods = ["GET","POST"])
 def sign_in():
     print(request.data)
-
+    print("signin==========")
     # Decode the byte sequence to a string
     json_string = request.data.decode('utf-8')
 
@@ -117,19 +118,23 @@ def sign_in():
     print(passwordhash)
 
     try:
-        query =f"""CALL check_user('{sign_in_data["email"]}', '{passwordhash}');"""
+        #query =f"""CALL check_user('{passwordhash}','{sign_in_data["username"]}');"""
+        query =f""" SELECT * FROM check_user('{sign_in_data["username"]}')"""
         print(query)
-        data.query_db(query, True)
-        access_token = create_access_token(identity=sign_in_data["email"])
-        response = make_response(jsonify({'access_token': access_token}))
-        response.headers["Access-Control-Allow-Headers"] = "Authorization"
-        #response.set_cookie("jwt_token", access_token, httponly=True)
-        print(response)
-        return response
-    
+        result = data.query_db(query, True)
+        print("result-----",result[1])
+        isAuthorized = check_password_hash(result[1],sign_in_data["password"])
+        if(isAuthorized):
+            access_token = create_access_token(identity=sign_in_data["username"])
+            response = make_response(jsonify({'access_token': access_token}))
+            response.headers["Access-Control-Allow-Headers"] = "Authorization"
+            print(response)
+            return response
+        else:
+            return jsonify({"msg": "Incorrect email or password"}), 401
     except Exception as error:
         print(error)
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "Incorrect email or password"}), 401
 
     
 

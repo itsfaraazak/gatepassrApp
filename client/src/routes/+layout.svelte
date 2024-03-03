@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../app.css"
-
+    let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
       element?.classList.remove("hidden");
@@ -9,12 +9,19 @@
       var element = document.getElementById("mobile-nav");
       element?.classList.add("hidden");
     }
-
+  
 </script>
 
 <div class="bg-white">
   
 <header class="absolute inset-x-0 top-0 z-50">
+    <!-- font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- font end -->
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
@@ -31,10 +38,10 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Teacher Console</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
+        <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="/management-console" class="text-sm font-semibold leading-6 text-gray-900">Teacher Console</a>
+        <a href="/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
+        <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <a href="/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
@@ -66,6 +73,7 @@
               <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
             </div>
             <div class="py-6">
+              <span>{useremail}</span>
               <a href="/auth/sign-up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
             </div>
           </div>

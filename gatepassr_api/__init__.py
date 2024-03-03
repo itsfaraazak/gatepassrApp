@@ -7,16 +7,32 @@ import identity.web
 import requests
 
 from flask_session import Session
-#from flask_login import LoginManager
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
+from flask_cors import CORS
 
 from . import config
 auth_test:any
+#from flask_bcrypt import Bcrypt
+
+
+
+
+
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_pyfile('config.py')
     print(app.config)
+
+    CORS(app,  supports_credentials=True)
+    jwt = JWTManager(app)
+    #bcrypt = Bcrypt(app) 
     #app.config.from_mapping(
         #SECRET_KEY='dev',
         # DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),

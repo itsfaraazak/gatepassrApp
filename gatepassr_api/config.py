@@ -14,7 +14,7 @@ print(load_dotenv)
 ENVIRONMENT = environ.get("ENVIRONMENT")
 FLASK_APP = environ.get("FLASK_APP")
 FLASK_DEBUG = environ.get("FLASK_DEBUG")
-#SECRET_KEY = environ.get("SECRET_KEY") -- no cookies are being used
+JWT_SECRET_KEY = environ.get("JWT_SECRET_KEY")
 
 # Database
 POSTGRES_HOST_URI = environ.get('POSTGRES_HOST_URI')

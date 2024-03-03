@@ -1,6 +1,63 @@
 <script>
+// @ts-nocheck
+import { gatepassrAPI } from "$lib/gatepassrAPI";
+
 let rooturlflask='http://127.0.0.1:5000'
 //let weburl='http://localhost:5173'
+let username = '';
+let password = '';
+let token = '';
+let res='';
+
+    let email = '';
+   // let password = '';
+   // let token = '';
+   import bcrypt from 'bcryptjs';
+
+   const numSaltRounds = 8;
+   //action="{rooturlflask}/auth/requestregistration"
+    const register = async () => {
+       //const hash = bcryptjs.hash(password, numSaltRounds);
+       
+       res = await bcrypt.hash(password, numSaltRounds)
+                    // @ts-ignore
+                    .then(result => {
+                        console.log('Result from promise:', result);
+                        password = result
+                    })
+                    // @ts-ignore
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Handle errors if the promise is rejected
+                    });
+        console.log(res)     
+        const response = await fetch(gatepassrAPI + '/auth/requestregistration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+               // 'Accept': 'application/json',
+            },
+            mode: 'no-cors',
+            body: JSON.stringify({username, email, password }),
+        });
+
+        const data = await response.json();
+
+        console.log(data)
+        if (data.access_token) {
+            token = data.access_token;
+            // Store the token in localStorage or a more secure storage mechanism
+            console.log('access_token:', token);
+            // After successful login
+            localStorage.setItem('jwtToken', token);
+            // @ts-ignore
+            console.log("===" +(localStorage.getItem("jwtToken")))
+            window.location.href = '/auth/sign-in/protected'; // Redirect to protected route
+
+        } else {
+            console.error('Login failed:', data.message);
+        } 
+    };
 </script>
 <html lang="en-US" class="h-full bg-white">
     <head>
@@ -15,17 +72,17 @@ let rooturlflask='http://127.0.0.1:5000'
             </div>
         
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="{rooturlflask}/auth/requestregistration" method="POST">
+            <form class="space-y-6"  on:submit={register}>
                 <div>
                     <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
                     <div class="mt-2">
-                        <input id="username" name="username" type="text"  required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input id="username" bind:value={username} name="username" type="text"  required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     </div>
                 <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input id="email" name="email" bind:value={email} type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
                 </div>
         
@@ -37,7 +94,7 @@ let rooturlflask='http://127.0.0.1:5000'
                     </div>
                 </div>
                 <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <input id="password" bind:value={password} name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
                 </div>
         

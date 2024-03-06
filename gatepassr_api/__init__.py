@@ -15,6 +15,8 @@ from flask_jwt_extended import JWTManager
 
 from flask_cors import CORS
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 from . import config
 auth_test:any
 #from flask_bcrypt import Bcrypt
@@ -31,6 +33,8 @@ def create_app(test_config=None):
     print(app.config)
 
     CORS(app,  supports_credentials=True)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
     jwt = JWTManager(app)
     #bcrypt = Bcrypt(app) 
     #app.config.from_mapping(

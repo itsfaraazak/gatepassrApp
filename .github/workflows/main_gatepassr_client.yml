@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - gatepassr
 on:
   push:
     paths:
-      - 'client/**'
+      - '/client'
     branches:
       - main
   workflow_dispatch:

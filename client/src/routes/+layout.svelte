@@ -16,10 +16,9 @@
   
 <header class="absolute inset-x-0 top-0 z-50">
     <!-- font -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- font end -->
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -39,7 +38,7 @@
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
         <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-        <a href="/management-console" class="text-sm font-semibold leading-6 text-gray-900">Teacher Console</a>
+        <a href="/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
@@ -80,7 +79,7 @@
         </div>
       </div>
     </div>
-  </header>
+</header>
   
 </div>
 

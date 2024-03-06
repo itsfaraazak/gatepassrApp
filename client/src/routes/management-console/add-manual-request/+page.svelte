@@ -2,6 +2,8 @@
 
     import { gatepassrAPI } from "$lib/gatepassrAPI";
     import { onMount } from "svelte";
+    import Breadcrumb from "../../../breadcrumb.svelte";
+
     let student_type: any[] = []
     let student_grade_json: any[] =[]
     let student_grade: any[] = []
@@ -27,7 +29,7 @@
             
           <div class="mx-4 mt-16 py-6 sm:mx-12">
             <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
-              <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
+              <!-- <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
                 <li class="inline-flex items-center">
                   <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="/management-console">
                     Management Console
@@ -38,7 +40,8 @@
                 <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200" aria-current="page">
                     Manual Request Entry
                 </li>
-              </ol>
+              </ol> -->
+              <Breadcrumb currentpage="Management Console"/>
             </div>
             <!-- page header -->
             <div class="mx-4 mt-8 mb-6 lg:items-center lg:justify-between">

@@ -1,5 +1,6 @@
 <script>
     import { PushNotifications } from '@capacitor/push-notifications';
+    import Breadcrumb from '../../breadcrumb.svelte';
 
     const addListeners = async () => {
     await PushNotifications.addListener('registration', token => {
@@ -50,7 +51,7 @@
             
           <div class="mx-4 mt-16 py-6 sm:mx-12">
             <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
-              <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
+              <!-- <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
                 <li class="inline-flex items-center">
                   <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="#">
                     Home
@@ -66,7 +67,8 @@
                 <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200" aria-current="page">
                   Application
                 </li>
-              </ol>
+              </ol> -->
+              <Breadcrumb currentpage="" />
             </div>
             <!-- page header -->
             <div class="mx-4 mt-8 mb-6 lg:flex lg:items-center lg:justify-between">

@@ -2,10 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    paths:
-      - '/client'
     branches:
       - dev
+    paths:
+      - '/client'
+    
   workflow_dispatch:
 
 jobs:

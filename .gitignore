@@ -414,3 +414,4 @@ client/.npmrc
 
 # Environment Variables (revelant for MS Entra ID)
 .env
+.vscode

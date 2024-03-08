@@ -2,6 +2,7 @@
 
     import { gatepassrAPI } from "$lib/gatepassrAPI";
     import { onMount } from "svelte";
+    import Breadcrumb from "../../../breadcrumb.svelte";
     
 
     let student_type: any[] = []

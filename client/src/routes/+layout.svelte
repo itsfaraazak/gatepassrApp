@@ -1,6 +1,8 @@
 <script lang="ts">
     import "../app.css"
-    let base="gatepassrApp"
+    import { env } from '$env/dynamic/public'
+    console.log(env.PUBLIC_BASEURL)
+    let base= env.PUBLIC_BASEURL ?? ""
     let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");

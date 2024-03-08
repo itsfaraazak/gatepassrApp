@@ -2,9 +2,9 @@ import os
 
 from flask import Flask, session, redirect, render_template, request, url_for
 
-import identity
-import identity.web
-import requests
+#import identity
+#import identity.web
+#import requests
 
 from flask_session import Session
 

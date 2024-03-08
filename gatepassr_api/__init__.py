@@ -31,7 +31,7 @@ def create_app(test_config=None):
     print(app.config)
 
     CORS(app,  supports_credentials=True)
-    jwt = JWTManager(app)
+   # jwt = JWTManager(app)
     #bcrypt = Bcrypt(app) 
     #app.config.from_mapping(
         #SECRET_KEY='dev',
@@ -74,10 +74,10 @@ def create_app(test_config=None):
         """
 
     # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    # try:
+    #     os.makedirs(app.instance_path)
+    # except OSError:
+    #     pass
 
     from . import get_data
     from . import post_data

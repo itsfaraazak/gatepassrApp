@@ -55,8 +55,18 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-
+    
+    
     steps:
+      -name: SET env variables
+       env:
+        POSTGRES_HOST_URI=gatepass-server.postgres.database.azure.com
+        POSTGRES_DATABASE_NAME=gatepass_db
+        POSTGRES_USERNAME=gp_admin
+        POSTGRES_PASSWD=g@tep@$$12
+        JWT_SECRET_KEY="super-secret"
+        FRONTEND_URL=http://localhost:5173
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:

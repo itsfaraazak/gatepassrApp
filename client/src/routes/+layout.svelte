@@ -1,5 +1,8 @@
 <script lang="ts">
     import "../app.css"
+    import {baseurl} from '$lib/gatepassrAPI'
+    import { gatepassrAPI } from "$lib/gatepassrAPI";
+    
     let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
@@ -37,13 +40,13 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-        <a href="/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
-        <a href="/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
-        <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
+        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
+        <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
+        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state -->
@@ -73,7 +76,7 @@
             </div>
             <div class="py-6">
               <span>{useremail}</span>
-              <a href="/auth/sign-up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
+              <a href="{base}/auth/sign-up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
             </div>
           </div>
         </div>

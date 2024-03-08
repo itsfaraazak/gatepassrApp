@@ -35,7 +35,7 @@ def create_app(test_config=None):
     CORS(app,  supports_credentials=True)
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
-    jwt = JWTManager(app)
+    #jwt = JWTManager(app)
     #bcrypt = Bcrypt(app) 
     #app.config.from_mapping(
         #SECRET_KEY='dev',

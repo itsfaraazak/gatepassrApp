@@ -7,20 +7,20 @@
     }
   function closeHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
-      element?.classList.add("hidden");
     }
-  
+
+/*     document.getElementsByClassName("sidebar-links a").click()
+ */  
 </script>
 
-<div class="bg-white">
-  
-<header class="absolute inset-x-0 top-0 z-50">
+
+<header class="absolute inset-x-0 top-0 z-50 safe-top safe-left safe-right">
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- font end -->
+    <!-- front end -->
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
@@ -50,8 +50,8 @@
     <div class="hidden" id="mobile-nav" role="dialog" aria-modal="true">
        <!-- Background backdrop, show/hide based on slide-over state. -->
       <div class="fixed inset-0 z-50"></div>
-      <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-        <div class="flex items-center justify-between">
+      <div class="fixed inset-y-0 right-0 z-50 safe-top w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div class="flex items-center justify-between p-6 lg:px-8">
           <a href="#" class="-m-1.5 p-1.5">
             <span class="sr-only">Your Company</span>
             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
@@ -63,9 +63,9 @@
             </svg>
           </button>
         </div>
-        <div class="mt-6 flow-root">ß
+        <div class="mt-6 mx-4 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
+            <div class="space-y-2 py-6" id="sidebar-links">
               <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Product</a>
               <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
               <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
@@ -80,8 +80,7 @@
       </div>
     </div>
 </header>
-  
-</div>
+
 
 
 <slot />

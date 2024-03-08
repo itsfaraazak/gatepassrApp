@@ -1,0 +1,7 @@
+{
+  "name": "gatepassr",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

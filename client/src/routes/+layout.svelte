@@ -2,7 +2,8 @@
     import "../app.css"
    
     import { gatepassrAPI } from "$lib/gatepassrAPI";
-    
+    import { base } from '$app/paths';
+
     let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
@@ -40,7 +41,7 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
         <a href="/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>

@@ -5,11 +5,11 @@
 name: Build and deploy Flask API
 
 on:
-  push:
-    path:
-      - 'gatepassr_api/**'
-    branches:
-      - dev
+  # push:
+  #   path:
+  #     - 'gatepassr_api/**'
+  #   branches:
+  #     - dev
   workflow_dispatch:
 
 jobs:

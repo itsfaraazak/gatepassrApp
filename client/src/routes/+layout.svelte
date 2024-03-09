@@ -1,9 +1,11 @@
 <script lang="ts">
     import "../app.css"
-   
+    let rooturl=""
     import { gatepassrAPI} from "$lib/gatepassrAPI";
-    import { baseurl } from  "$lib/gatepassrAPI";
-
+    import { base } from  "$app/paths";
+    console.log(base);
+    rooturl = base;
+    console.log(rooturl)
     let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
@@ -37,17 +39,17 @@
           <span class="sr-only">Open main menu</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
+          </svg>n
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="{baseurl}/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-        <a href="{baseurl}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
-        <a href="{baseurl}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
-        <a href="{baseurl}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
+        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
+        <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
+        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="{baseurl}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state -->
@@ -77,7 +79,7 @@
             </div>
             <div class="py-6">
               <span>{useremail}</span>
-              <a href="{baseurl}/auth/sign-up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
+              <a href="{base}/auth/sign-up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
             </div>
           </div>
         </div>

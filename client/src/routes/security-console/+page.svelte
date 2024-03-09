@@ -15,7 +15,7 @@
      */
   let return_status;
   onMount( async () => {
-      fetch("/recieve/todaysrequests")
+      fetch(gatepassrAPI +"/recieve/todaysrequests")
           .then( response => response.json() )
           .then( data => { requests = data } )
   });

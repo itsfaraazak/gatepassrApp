@@ -31,7 +31,7 @@ def create_app(test_config=None):
     print(app.config)
 
     CORS(app,  supports_credentials=True)
-   # jwt = JWTManager(app)
+    jwt = JWTManager(app)
     #bcrypt = Bcrypt(app) 
     #app.config.from_mapping(
         #SECRET_KEY='dev',

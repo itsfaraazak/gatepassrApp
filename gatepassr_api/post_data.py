@@ -2,6 +2,7 @@ import json
 from flask import (
     Flask, jsonify, request, redirect, Blueprint
 )
+from flask import current_app
 
 from gatepassr_api.database import data
 
@@ -25,11 +26,12 @@ def sumbit_request():
         #data.query_db(query, True)
         data.commandquery(query)
         print(form_data)
-        return redirect("http://localhost:5173")
+        return redirect(current_app.config['FRONTEND_URL'])
+            #"http://localhost:5173")
     except:
         print(query)
         print(form_data)
-        return redirect("http://localhost:5173/request-a-gatepass")
+        return redirect(current_app.config['FRONTEND_URL'] +"/request-a-gatepass")
 
 @bp.route("/approverequest", methods=["POST"])
 def approve_gatepass_request():

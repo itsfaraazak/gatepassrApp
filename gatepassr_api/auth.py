@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-
+from flask import current_app
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -65,10 +65,10 @@ def process_sign_up():
         query =f"CALL register_user('{sign_up_data['username']}', '{passwordhash}', '{sign_up_data['email']}');"
         print(query)
         data.commandquery(query)
-        return redirect("http://localhost:5173/auth/request-a-gatepass")
+        return redirect(current_app.config['FRONTEND_URL']+"/auth/request-a-gatepass")
     except Exception as error:
         print(error)
-        return redirect("http://localhost:5173/auth/sign-up")
+        return redirect(current_app.config['FRONTEND_URL']+"/auth/sign-up")
     
 
     

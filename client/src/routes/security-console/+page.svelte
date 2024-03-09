@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import Breadcrumb from '$components/breadcrumb.svelte';
   import { gatepassrAPI } from "$lib/gatepassrAPI";
+  import { base } from '$app/paths';
 
  // import { _get_requests } from '../+layout';
   /**
@@ -32,7 +33,7 @@
   }
 
   function addManualExit() {
-    goto('/request-a-gatepass')
+    goto(base +'/request-a-gatepass')
   }
 
     

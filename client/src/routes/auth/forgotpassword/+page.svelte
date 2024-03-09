@@ -1,5 +1,6 @@
 <script>
 let apiurl='http://127.0.0.1:5000'
+import { base } from '$app/paths';
 //let weburl='http://localhost:5173'
 </script>
 <html lang="en-US" class="h-full bg-white">
@@ -42,7 +43,7 @@ let apiurl='http://127.0.0.1:5000'
         
             <p class="mt-10 text-center text-sm text-gray-500">
                 Not a member?
-                <a href="/request-a-gatepass" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Send gatepass request (to remove)</a>
+                <a href="{base}/request-a-gatepass" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Send gatepass request (to remove)</a>
             </p>
             </div>
         </div>

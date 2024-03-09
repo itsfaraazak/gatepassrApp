@@ -1,5 +1,6 @@
 <script>
     import { gatepassrAPI } from "$lib/gatepassrAPI";
+    import { base } from '$app/paths';
     // @ts-ignore
     let rooturlflask='http://127.0.0.1:5000'
     // @ts-ignore
@@ -32,7 +33,7 @@
             // @ts-ignore
             console.log("===" +(localStorage.getItem("jwtToken")))
             //window.location.href = '/auth/sign-in/protected'; // Redirect to protected route
-            window.location.href = '/request-a-gatepass'; // Redirect to protected route
+            window.location.href = '{base}/request-a-gatepass'; // Redirect to protected route
 
         } else {
             message = data.msg;
@@ -66,7 +67,7 @@
                 <div class="flex items-center justify-between">
                     <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
                     <div class="text-sm">
-                    <a href="/auth/forgotpassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                    <a href="{base}/auth/forgotpassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -81,7 +82,7 @@
              <span>{message}</span>
             <p class="mt-10 text-center text-sm text-gray-500">gatepassrAPIgatepassrAPI
                 Not a member?
-                <a href="/auth/sign-up" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign Up</a>
+                <a href="{base}/auth/sign-up" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign Up</a>
             </p>
             </div>
         </div>

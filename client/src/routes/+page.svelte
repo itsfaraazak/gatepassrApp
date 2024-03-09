@@ -1,7 +1,6 @@
 <script lang=ts>
   import { gatepassrAPI } from "$lib/gatepassrAPI"
   let openMenu = false;
-  
   /*
   function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");

@@ -1,7 +1,9 @@
 <script>
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
-  import Breadcrumb from '../../breadcrumb.svelte';
+  import Breadcrumb from '$components/breadcrumb.svelte';
+  import { gatepassrAPI } from "$lib/gatepassrAPI";
+  import { base } from '$app/paths';
 
  // import { _get_requests } from '../+layout';
   /**
@@ -14,7 +16,7 @@
      */
   let return_status;
   onMount( async () => {
-      fetch("http://127.0.0.1:5000/recieve/todaysrequests")
+      fetch(gatepassrAPI +"/recieve/todaysrequests")
           .then( response => response.json() )
           .then( data => { requests = data } )
   });
@@ -31,7 +33,7 @@
   }
 
   function addManualExit() {
-    goto('/request-a-gatepass')
+    goto(base +'/request-a-gatepass')
   }
 
     
@@ -67,7 +69,7 @@
          // };
        // };
         
-          let response =  fetch("http://127.0.0.1:5000/submit/approverequest",{
+          let response =  fetch(gatepassrAPI+"/submit/approverequest",{
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             mode: "no-cors", // no-cors, *cors, same-origin
             //cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

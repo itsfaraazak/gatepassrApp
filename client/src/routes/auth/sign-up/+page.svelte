@@ -1,8 +1,8 @@
 <script>
 // @ts-nocheck
 import { gatepassrAPI } from "$lib/gatepassrAPI";
-
-let rooturlflask='http://127.0.0.1:5000'
+import {base} from '$app/paths';
+//let rooturlflask=''
 //let weburl='http://localhost:5173'
 let username = '';
 let password = '';
@@ -75,7 +75,7 @@ let res='';
                 <div class="flex items-center justify-between">
                     <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
                     <div class="text-sm">
-                    <a href="/auth/forgotpassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                    <a href="{base}/auth/forgotpassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -90,7 +90,7 @@ let res='';
         
             <p class="mt-10 text-center text-sm text-gray-500">
                 Not a member?
-                <a href="/request-a-gatepass" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Send gatepass request (to remove)</a>
+                <a href="{base}/request-a-gatepass" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Send gatepass request (to remove)</a>
             </p>
             </div>
         </div>

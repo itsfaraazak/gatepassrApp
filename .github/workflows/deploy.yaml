@@ -1,9 +1,9 @@
-name: Deploy to GitHub Pages1
+name: Deploy App to GitHub 
 
 on:
   push:
     branches:
-      - dev
+      - deploy
   workflow_dispatch:
 
 jobs:

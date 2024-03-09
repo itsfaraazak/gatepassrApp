@@ -1,10 +1,11 @@
 <script>
+import { base } from '$app/paths';
 export let currentpage= undefined
 </script>
 <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
     <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
       <li class="inline-flex items-center">
-        <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="/home">
+        <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="{base}/home">
           Home
         </a>
         {#if currentpage}

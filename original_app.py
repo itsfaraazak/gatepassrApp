@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, redirect
 import logging
 from . import get_data
 from . import post_data
+from flask import current_app
 
 import sys
 sys.path.insert(0, "database")
@@ -89,7 +90,7 @@ def registeruser():
         "grade": request.form["password"]
     }
     data.registeruser(form_data)
-    return redirect("http://localhost:5173/request-a-gatepass")
+    return redirect(current_app.config['FRONTEND_URL']+"/request-a-gatepass")
 
 
 

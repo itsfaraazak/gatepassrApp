@@ -1,7 +1,8 @@
 <script lang="ts">
     import "../app.css"
-/*     import {base} from '$lib/gatepassrAPI'
- */    import { gatepassrAPI } from "$lib/gatepassrAPI";
+    
+    import { gatepassrAPI} from "$lib/gatepassrAPI";
+    import { base } from  "$app/paths";
     
     let useremail=""
 /*      function openHamburgerMenu() {
@@ -45,7 +46,7 @@
           <span class="sr-only">Open main menu</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
+          </svg>n
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">

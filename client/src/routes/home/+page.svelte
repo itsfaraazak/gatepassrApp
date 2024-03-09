@@ -1,6 +1,6 @@
 <script>
     import { PushNotifications } from '@capacitor/push-notifications';
-    import Breadcrumb from '../../breadcrumb.svelte';
+    import Breadcrumb from '$components/breadcrumb.svelte';
 
     const addListeners = async () => {
     await PushNotifications.addListener('registration', token => {

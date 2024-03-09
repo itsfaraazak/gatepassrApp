@@ -4,8 +4,11 @@
 import { redirect } from '@sveltejs/kit';
 import { onMount } from 'svelte';
 import { goto } from '$app/navigation';
-import Table from '../../table.svelte';
-import Breadcrumb from '../../breadcrumb.svelte';
+import Table from '$components/table.svelte';
+import Breadcrumb from '$components/breadcrumb.svelte';
+
+import { gatepassrAPI } from "$lib/gatepassrAPI";
+import { base } from '$app/paths';
 /**
  * @type {any[]}
  */
@@ -16,7 +19,7 @@ let requests = []
 let return_status;
 
 onMount( async () => {
-    fetch("http://127.0.0.1:5000/recieve/pendingrequests")
+    fetch(gatepassrAPI +"/recieve/pendingrequests")
         .then( response => response.json() )
         .then( data => { requests = data } )
 });
@@ -40,7 +43,7 @@ function addManualRequest() {
   // @ts-ignore
 function approveRequest(request_id) {
   console.log(request_id);
-  let response =  fetch("http://127.0.0.1:5000/submit/approverequest",{
+  let response =  fetch(gatepassrAPI+"/submit/approverequest",{
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "no-cors", // no-cors, *cors, same-origin
     headers: {

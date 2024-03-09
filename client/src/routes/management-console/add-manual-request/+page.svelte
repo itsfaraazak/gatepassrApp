@@ -2,7 +2,8 @@
 
     import { gatepassrAPI } from "$lib/gatepassrAPI";
     import { onMount } from "svelte";
-    import Breadcrumb from "../../../breadcrumb.svelte";
+    //import Breadcrumb from '$components/breadcrumb.svelte';
+    import Breadcrumb from '$components/breadcrumb.svelte';
     
 
     let student_type: any[] = []

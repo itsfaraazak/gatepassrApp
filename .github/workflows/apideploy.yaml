@@ -9,7 +9,7 @@ on:
     path:
       - 'gatepassr_api/**'
     branches:
-      - deploy
+      - deploy1
   workflow_dispatch:
 
 jobs:

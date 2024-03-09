@@ -2,10 +2,9 @@
     import { onMount } from 'svelte';
     import { gatepassrAPI } from "$lib/gatepassrAPI";
 
-    import Gprequest from  '../../gprequest.svelte';
-    import Breadcrumb from '../../breadcrumb.svelte';
-    
-    import {grades} from '../../config.js';
+    import Gprequest from  '$components/gprequest.svelte';
+    import Breadcrumb from '$components/breadcrumb.svelte';
+    import {grades} from '../../config'
 
     let student_type: any[] = []
     let student_grade_json: any[] =[]

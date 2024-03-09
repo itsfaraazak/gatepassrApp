@@ -2,7 +2,7 @@
 // @ts-nocheck
 import { gatepassrAPI } from "$lib/gatepassrAPI";
 import {base} from '$app/paths';
-let rooturlflask='http://127.0.0.1:5000'
+//let rooturlflask=''
 //let weburl='http://localhost:5173'
 let username = '';
 let password = '';

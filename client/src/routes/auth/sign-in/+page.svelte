@@ -2,7 +2,7 @@
     import { gatepassrAPI } from "$lib/gatepassrAPI";
     import { base } from '$app/paths';
     // @ts-ignore
-    let rooturlflask='http://127.0.0.1:5000'
+    //let rooturlflask='http://127.0.0.1:5000'
     // @ts-ignore
     let username = '';
     let password = '';
@@ -33,7 +33,7 @@
             // @ts-ignore
             console.log("===" +(localStorage.getItem("jwtToken")))
             //window.location.href = '/auth/sign-in/protected'; // Redirect to protected route
-            window.location.href = '{base}/request-a-gatepass'; // Redirect to protected route
+            window.location.href = base +'/request-a-gatepass'; // Redirect to protected route
 
         } else {
             message = data.msg;

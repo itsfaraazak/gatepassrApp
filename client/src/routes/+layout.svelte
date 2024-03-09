@@ -1,11 +1,9 @@
 <script lang="ts">
     import "../app.css"
-    let rooturl=""
+    
     import { gatepassrAPI} from "$lib/gatepassrAPI";
     import { base } from  "$app/paths";
-    console.log(base);
-    rooturl = base;
-    console.log(rooturl)
+    
     let useremail=""
     function openHamburgerMenu() {
       var element = document.getElementById("mobile-nav");

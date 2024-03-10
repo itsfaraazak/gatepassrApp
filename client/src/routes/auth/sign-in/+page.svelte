@@ -1,6 +1,10 @@
 <script>
     import { gatepassrAPI } from "$lib/gatepassrAPI";
     import { base } from '$app/paths';
+
+    import {signIn, signOut} from "@auth/sveltekit/client"
+    import {page} from "$app/stores";
+    
     // @ts-ignore
     //let rooturlflask='http://127.0.0.1:5000'
     // @ts-ignore
@@ -80,13 +84,43 @@
                 <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
                 </div>
             </form>
+
              <span>{message}</span>
-            <p class="mt-10 text-center text-sm text-gray-500">gatepassrAPIgatepassrAPI
+            <p class="mt-10 text-center text-sm text-gray-500">
                 Not a member?
                 <a href="{base}/auth/sign-up" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign Up</a>
             </p>
+            {#if $page.data.session}
+            <span>
+                <small>Signed in as</small><br/>
+                <strong>{$page.data.session.user?.name ?? "User"}</strong>
+            </span>
+            <button on:click={() => signOut()} class="button">Sign out</button>
+            {:else}
+                <span>You are not signed in</span>
+              
+                    <input type="hidden" name="callbackUrl" value="/api/auth/callback/google" />
+               
+                <button on:click={() => signIn("github")} class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                    Sign In with Github
+                </button>
+
+                <button on:click={() => signIn("google")} class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                    Sign In with Google
+                </button>
+            {/if}
+
+            {#if $page.data.session}
+            <span class="signedInText">
+              {$page.data.session.user?.email ?? $page.data.session.user?.name}
+            </span>
+          {/if}
             </div>
         </div>
+        
+        <p>testing
+          
+        </p>
 
     </body>
 </html>

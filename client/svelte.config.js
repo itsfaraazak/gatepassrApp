@@ -16,12 +16,13 @@ const config = {
 			precompress: false,
 			strict: true}),
 		alias: {
-			$components: "src/components",
-			$baseurl:"https://itsfaraazak.github.io/gatepassrApp"
+			$components: "src/components"
+			//$baseurl:"https://itsfaraazak.github.io/gatepassrApp"
 			},
 		paths: {
 			// @ts-ignore
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+			
 		}
 	}
 };

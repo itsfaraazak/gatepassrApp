@@ -3,19 +3,13 @@
     
     import { gatepassrAPI} from "$lib/gatepassrAPI";
     import { base } from  "$app/paths";
+    import type { LayoutData } from './$types';
+    import {signIn, signOut} from "@auth/sveltekit/client"
+	
+	  export let data: LayoutData;
     
     let useremail=""
-/*      function openHamburgerMenu() {
-      var element = document.getElementById("mobile-nav");
-      element?.classList.remove("hidden");
-    }
-    
-    function closeHamburgerMenu() {
-      var element = document.getElementById("mobile-nav");
-      element?.classList.add("hidden");
 
-    }
- */
     function toggleHamburgerMenu() {
       var element = document.getElementById("mobile-nav");
       element?.classList.toggle("hidden")
@@ -56,8 +50,18 @@
         <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          {#if data.session}
+          <span>
+              <small>Signed in as</small><br/>
+              <strong>{data.session.user?.name ?? "User"}</strong>
+          </span>
+          {:else}
+            <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">
+              Log in 
+              <span aria-hidden="true">&rarr;</span></a>
+          {/if}
       </div>
+      
     </nav>
     <!-- Mobile menu, show/hide based on menu open state -->
     <div class="hidden" id="mobile-nav" role="dialog" aria-modal="true">
@@ -87,6 +91,16 @@
             <div class="py-6">
               <span>{useremail}</span>
               <a href="{base}/auth/sign-up" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
+              {#if data.session}
+              <span>
+                  <strong>{data.session.user?.name ?? "User"}</strong>
+                  <button on:click={() => signOut()} class="button">Sign out</button>
+              </span>
+              {:else}
+                <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">
+                  Log in 
+                  <span aria-hidden="true">&rarr;</span></a>
+              {/if}
             </div>
           </div>
         </div>

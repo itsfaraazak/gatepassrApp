@@ -3,13 +3,15 @@
 
     import { json, redirect } from '@sveltejs/kit';
 import { onMount } from 'svelte';
+import { gatepassrAPI } from "$lib/gatepassrAPI";
+import {base} from '$app/paths';
     /**
      * @type {any[]}
      */
     let requests = []
     let return_status;
     onMount( async () => {
-        fetch("http://127.0.0.1:5000/recieve/pendingrequests")
+        fetch(gatepassrAPI +"/recieve/pendingrequests")
             .then( response => response.json() )
             .then( data => { requests = data } )
     });
@@ -57,7 +59,7 @@ import { onMount } from 'svelte';
      // };
    // };
     
-      let response =  fetch("http://127.0.0.1:5000/submit/approverequest",{
+      let response =  fetch(gatepassrAPI +"/submit/approverequest",{
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "no-cors", // no-cors, *cors, same-origin
         //cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

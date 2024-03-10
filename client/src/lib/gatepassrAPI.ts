@@ -1,7 +1,7 @@
 
 export const gatepassrAPI = "https://gatepassrapi.azurewebsites.net"
 //export const baseurl ="http://localhost:5173"
-//"https://itsfaraazak.github.io/gatepassrApp"
+//"https://itsfaraazak.github.io/gatepassrApp"npm run build
 export const baseurl ="https://itsfaraazak.github.io/gatepassrApp"
 
 //"https://gatepassrapi.azurewebsites.net"

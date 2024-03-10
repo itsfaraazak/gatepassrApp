@@ -1,5 +1,6 @@
 <script>
-let apiurl='http://127.0.0.1:5000'
+//let apiurl='http://127.0.0.1:5000'
+import { gatepassrAPI } from "$lib/gatepassrAPI";
 import { base } from '$app/paths';
 //let weburl='http://localhost:5173'
 </script>
@@ -16,7 +17,7 @@ import { base } from '$app/paths';
             </div>
         
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="{apiurl}/auth/forgotpassword" method="POST">
+            <form class="space-y-6" action="{gatepassrAPI}/auth/forgotpassword" method="POST">
                 <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">

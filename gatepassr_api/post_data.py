@@ -35,8 +35,6 @@ def sumbit_request():
 
 @bp.route("/approverequest", methods=["POST"])
 def approve_gatepass_request():
-    print("test")
-    #print(request.form['btnapprove'])
     content_type = request.headers.get('Content-Type')
     print(content_type)
     if (content_type == 'application/json'):
@@ -44,17 +42,34 @@ def approve_gatepass_request():
         print(req)
     else:
         print('Json Content-Type not supported!')
-        #requestid = (request.data)
         requestid = int(request.data.decode("utf-8"))
         print(requestid)
     try:
         #query = "UPDATE requests SET approved_by = 'teacher@example.com', approved_at = NOW() WHERE request_id = 3;"
         query=f"""CALL approve_request({requestid},'teacher@abc.com');"""
-        print(query)
         data.commandquery(query)
-        print("ok")
         return "success"
     except Exception as e:
         print(f"Error: {e}")
         return "try again"
+
+@bp.route("/profiledata", methods=["POST"])   
+def submit_profile():
+    print("Profile")
+    #try:
+    """     data = request.data
+    print(data)
+    """
+    profile_data = json.loads(request.data)
+    print(profile_data)
+    print(type(profile_data))
+    
+    #update two tables
+    
+    query = f"""CALL profiledata('{profile_data["primary_guardian_name"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_name"]}','{profile_data["secondary_contact_number"]}','testing@abc.com')"""
+    print(query)
+    data.commandquery(query)
+    return("Profile saved")
+    #except:
+    #    return("Please try again.")
     

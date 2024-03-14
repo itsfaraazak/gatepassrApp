@@ -13,4 +13,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 		Google({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),
 		AzureAd({ clientId: AZURE_AD_CLIENT_ID, clientSecret: AZURE_AD_CLIENT_SECRET, tenantId: AZURE_AD_TENANT_ID }),
 	],
+	debug:true,
+	trustHost:true,
 });

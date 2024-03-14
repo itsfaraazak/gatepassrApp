@@ -37,12 +37,13 @@
             Type
           </p>
         </th>
-      -->
+      -->{#if approveReq}
         <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
           <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
             Actions
           </p>
         </th>
+        {/if}
       </tr>
     </thead>
     <tbody>
@@ -86,6 +87,7 @@
           </div>
         </td>
       -->
+      {#if approveReq}
         <td class="p-4 border-b border-blue-gray-50">
           <div class="w-max">
             {#if r[6] == null}
@@ -101,6 +103,7 @@
             {/if}
           </div>
         </td>
+      {/if}
         <td class="p-4 border-b border-blue-gray-50">
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
             {r[4].substring(0,16)}

@@ -259,3 +259,61 @@ $BODY$;
 
 ALTER FUNCTION public.check_user(character varying)
     OWNER TO gp_admin;
+
+CREATE TABLE IF NOT EXISTS public.guardian
+(
+    guardian_id integer NOT NULL DEFAULT nextval('parent_parent_id_seq'::regclass),
+    primary_guardian_email character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    secondary_guardian_email character varying(100) COLLATE pg_catalog."default",
+    primary_contactnumber character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    seconday_contactnumber character varying(15) COLLATE pg_catalog."default",
+    created_on timestamp without time zone DEFAULT now(),
+    created_by character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT parent_pkey PRIMARY KEY (guardian_id),
+    CONSTRAINT parent_primary_guardian_email_key UNIQUE (primary_guardian_email)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.guardian
+    OWNER to gp_admin;
+
+CREATE OR REPLACE PROCEDURE public.profiledata(
+	IN _primary_guardian_email character varying,
+	IN _primary_contactnumber character varying,
+	IN _secondary_guardian_email character varying,
+	IN _seconday_contactnumber character varying,
+	IN _created_by character varying)
+LANGUAGE 'sql'
+AS $BODY$
+-- create or update profile data
+ 
+   INSERT INTO public.guardian(primary_guardian_email,secondary_guardian_email
+							,primary_contactnumber
+							,seconday_contactnumber
+							,created_by)
+	values(_primary_guardian_email,_secondary_guardian_email
+							,_primary_contactnumber
+							,_seconday_contactnumber
+		  					,_created_by)
+
+$BODY$;
+ALTER PROCEDURE public.profiledata(character varying, character varying, character varying, character varying, character varying)
+    OWNER TO gp_admin;
+
+CREATE TABLE IF NOT EXISTS public.student
+(
+    student_id integer NOT NULL DEFAULT nextval('student_student_id_seq'::regclass),
+    student_email character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    student_grade character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    student_type integer NOT NULL,
+    parent_id integer NOT NULL,
+    createdon timestamp without time zone DEFAULT now(),
+    CONSTRAINT student_pkey PRIMARY KEY (student_id),
+    CONSTRAINT student_student_email_key UNIQUE (student_email)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.student
+    OWNER to gp_admin;

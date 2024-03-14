@@ -75,3 +75,21 @@ ADD COLUMN guardian_name VARCHAR(100),
 ADD COLUMN guardian_relation VARCHAR(100),
 ADD COLUMN guardian_email VARCHAR(100);
 
+
+
+CREATE TABLE parent (
+	parent_id SERIAL NOT NULL PRIMARY KEY,
+	primary_guardian_email VARCHAR(100) UNIQUE NOT NULL,
+	secondary_guardian_email VARCHAR(100),
+	primary_contactnumber VARCHAR(15) NOT NULL,
+	seconday_contactnumber VARCHAR(15),
+	createdon  TIMESTAMP DEFAULT now()
+);
+CREATE TABLE student (
+	student_id SERIAL NOT NULL PRIMARY KEY,
+	student_email VARCHAR(100) UNIQUE NOT NULL,
+	student_grade VARCHAR(2) NOT NULL,
+	student_type INT NOT NULL,
+	parent_id int NOT NULL,
+	createdon TIMESTAMP DEFAULT now()
+)

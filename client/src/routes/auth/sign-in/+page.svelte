@@ -62,7 +62,7 @@
             </div>
         
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form id=sign-in class="space-y-6" on:submit={login}>
+            <!-- <form id=sign-in class="space-y-6" on:submit={login}>
                 <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
@@ -91,23 +91,27 @@
             <p class="mt-10 text-center text-sm text-gray-500">
                 Not a member?
                 <a href="{base}/auth/sign-up" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign Up</a>
-            </p>
+            </p> -->
             {#if $page.data.session}
-            <span>
+            <p>
                 <small>Signed in as</small><br/>
                 <strong>{$page.data.session.user?.name ?? "User"}</strong>
-            </span>
-            <button on:click={() => signOut()} class="button">Sign out</button>
+            </p>
+            <button on:click={() => signOut()} class="button flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign out</button>
             {:else}
-                <span>You are not signed in</span>
-               
-                <button on:click={() => signIn("github")} class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                <button on:click={() => signIn("azure-ad")} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                    Sign In with Microsoft
+                </button>
+
+                <button on:click={() => signIn("google")} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                    Sign In with Google
+                </button>
+
+                <button on:click={() => signIn("github")} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
                     Sign In with Github
                 </button>
 
-                <button on:click={() => signIn("google")} class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
-                    Sign In with Google
-                </button>
+                
             {/if}
 
             {#if $page.data.session}
@@ -118,9 +122,5 @@
             </div>
         </div>
         
-        <p>testing
-          
-        </p>
-
     </body>
 </html>

@@ -21,6 +21,8 @@
 </script>
 
 
+
+
 <header class="absolute inset-x-0 top-0 z-50 safe-top safe-left safe-right">
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +46,7 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/userconsole" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
         <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
@@ -52,7 +54,7 @@
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           {#if data.session}
           <span>
-              <small>Signed in as</small><br/>
+            <a href="{base}/profile" class="text-sm font-semibold leading-6 text-gray-900">Profile</a><br/>
               <strong>{data.session.user?.name ?? "User"}</strong>
           </span>
           {:else}

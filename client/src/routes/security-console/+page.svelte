@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import Breadcrumb from '$components/breadcrumb.svelte';
+  import Table from '$components/table.svelte';
   import { gatepassrAPI } from "$lib/gatepassrAPI";
   import { base } from '$app/paths';
 
@@ -183,128 +184,7 @@
                     </div>
               </div>
               <div class="px-1 overflow-auto">
-                <table class="w-full mt-4 text-left table-auto min-w-max">
-                  <thead>
-                    <tr>
-                      <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                          Student
-                        </p>
-                      </th>
-                      <!-- <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                          Grade
-                        </p>
-                      </th> -->
-                      
-                      <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                          Status
-                        </p>
-                      </th>
-                    
-                      <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                            Exit Time
-                        </p>
-                      </th>
-                      <!--
-                      <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                          Type
-                        </p>
-                      </th>
-                                        -->
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- row -->
-    
-                    {#each requests as r}
-                    <tr>
-                      <td class="p-4 border-b border-blue-gray-50">
-                        <div class="flex items-center gap-3">
-                          <div class="flex flex-col">
-                            <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                              {r[0]}
-                            </p>
-                            <p
-                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                            Grade {r[1]}
-                            </p>
-                          </div>
-                        </div>
-                      <!-- </td>
-                       <td class="p-4 border-b border-blue-gray-50">
-                        <div class="flex flex-col">
-                          <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                            {r[2]}
-                          </p>
-                           <p
-                            class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                            {r[5]}
-                          </p> 
-                        </div>
-                      </td> -->
-                      <!--
-                      <td class="p-4 border-b border-blue-gray-50">
-                        <div class="w-max">
-                          <div
-                            class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-green-900 uppercase rounded-md select-none whitespace-nowrap bg-green-500/20">
-                            <span class="">Approved</span>
-                          </div>
-                        </div>
-                      </td>
-                    -->
-                    <!-- status -->
-                      <td class="p-4 border-b border-blue-gray-50">
-                        <div class="w-max">
-                          {#if r[2] == null}
-                            <div
-                            class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-red-900 uppercase rounded-md select-none whitespace-nowrap bg-red-500/20">
-                            <span class="status">Pending</span>
-                          </div>
-                          {:else}
-                            <div
-                            class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-green-900 uppercase rounded-md select-none whitespace-nowrap bg-green-500/20">
-                            <span class="status">Approved</span>
-                           </div>
-                          {/if}
-                        </div>
-                      </td>
-                      <td class="p-4 border-b border-blue-gray-50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          {r[3].substring(0,16)}
-                        </p>
-                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900 opacity-70">
-                        {r[3].substring(16)}
-                      </p>
-                      </td>
-                      <!--
-                      <td class="p-4 border-b border-blue-gray-50">
-                        <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          {r[5]}
-                        </p>
-                      </td>
-                    -->
-    
-                          <!--
-                          <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
-                              class="w-4 h-4">
-                              <path
-                                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z">
-                              </path>
-                            </svg>
-                          </span>
-                        -->
-                        
-                      
-                    </tr>
-                    {/each}
-                    <!-- row end -->
-    
-                </table>
+                <Table req={requests} ></Table>
               </div>
               <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">

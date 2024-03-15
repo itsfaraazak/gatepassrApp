@@ -46,7 +46,7 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="{base}/userconsole" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/student-console" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
         <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
@@ -71,7 +71,7 @@
       <div class="fixed inset-0 z-50"></div>
       <div class="fixed inset-y-0 right-0 z-50 safe-top w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
         <div class="flex items-center justify-between p-6 lg:px-8">
-          <a href="#" class="-m-1.5 p-1.5">
+          <a href="{base}/" on:click={toggleHamburgerMenu} class="-m-1.5 p-1.5">
             <span class="sr-only">Your Company</span>
             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
           </a>
@@ -85,23 +85,24 @@
         <div class="mt-6 mx-4 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6" id="sidebar-links">
-              <a href="#" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Product</a>
-              <a href="#" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</a>
-              <a href="#" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</a>
-              <a href="#" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</a>
+              <a href="{base}/home" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
+              <a href="{base}/management-console" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Management Console</a>
+              <a href="{base}/security-console" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Security Console</a>
+              <a href="{base}/request-a-gatepass" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Request a Gatepass</a>
             </div>
             <div class="py-6">
               <span>{useremail}</span>
-              <a href="{base}/auth/sign-up" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
               {#if data.session}
-              <span>
+              <div class="">
                   <strong>{data.session.user?.name ?? "User"}</strong>
-                  <button on:click={() => signOut()} class="button">Sign out</button>
-              </span>
+                  <button on:click={() => signOut()} class="button -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign out</button>
+              </div>
               {:else}
-                <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">
+                <a href="{base}/auth/sign-in" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                   Log in 
-                  <span aria-hidden="true">&rarr;</span></a>
+                <span aria-hidden="true">&rarr;</span></a>
+                <a href="{base}/auth/sign-up" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
+
               {/if}
             </div>
           </div>

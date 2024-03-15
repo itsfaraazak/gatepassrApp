@@ -37,72 +37,8 @@
     goto(base +'/request-a-gatepass')
   }
 
-    
-      
-      function approveRequest(request_id) {
-          console.log(request_id);
-          /*
-          const bodydata = {
-              request_id: request_id,
-              name: request_id,
-              email: "abc@awesome.com"
-            };
-          request_id = 1
-          console.log(JSON.stringify(bodydata));
-          const updateData = async () => {
-            const response = await fetch('localhost:5000/submit/approverequest', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': "text/html"
-                },
-                body: request_id  // the variable dataToSend can be a 'string' or an {object} that comes from somewhere else in our application
-            });
-          if (response.ok) {
-              const data = await response.json();
-              console.log(data)
-              return data;
-          } 
-          else 
-          {
-              console.log('error: ', response.status, response.statusText);
-              /* Handle the error returned by the HTTP request */
-             // return {error: {status: response.status, statusText: response.statusText}};
-         // };
-       // };
-        
-          let response =  fetch(gatepassrAPI+"/submit/approverequest",{
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "no-cors", // no-cors, *cors, same-origin
-            //cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            //credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-              "Content-Type": "text/plain",
-              // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            Accept: "text/plain",
-            //redirect: "follow", // manual, *follow, error
-            //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //body: '{"request": "'+ request_id +'"}'
-            body: request_id
-          });
-    
-          response.then(data =>return_status=data)
-              //return_status = (json)
-          console.log(return_status)
-          if (response.ok) {
-              //const data =  response.json();
-              console.log(response.data)
-              //return data;
-          } 
-          else 
-          {
-              console.log('error: ', response.status, response.statusText);
-              /* Handle the error returned by the HTTP request */
-             // return {error: {status: response.status, statusText: response.statusText}};
-          };
-      }
        
-    </script>
+</script>
     
     <html lang="en-US" class="h-full bg-gray-100">
         <head>

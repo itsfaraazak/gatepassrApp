@@ -34,7 +34,7 @@
   }
 
   function addManualExit() {
-    goto(base +'/request-a-gatepass')
+    goto(base +'/security-console/add-manual-exit')
   }
 
        

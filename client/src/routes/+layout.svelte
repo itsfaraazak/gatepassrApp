@@ -47,6 +47,7 @@
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
         <a href="{base}/student-console" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/request-a-gatepass" class="text-sm font-semibold leading-6 text-gray-900">Request Gatepass</a>
         <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
@@ -86,15 +87,18 @@
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6" id="sidebar-links">
               <a href="{base}/home" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
+              <a href="{base}/request-a-gatepass" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Request a Gatepass</a>
               <a href="{base}/management-console" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Management Console</a>
               <a href="{base}/security-console" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Security Console</a>
-              <a href="{base}/request-a-gatepass" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Request a Gatepass</a>
-            </div>
+               </div>
             <div class="py-6">
               <span>{useremail}</span>
               {#if data.session}
               <div class="">
                   <strong>{data.session.user?.name ?? "User"}</strong>
+                  <a href="{base}/profile" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                    Profile</a>
+           
                   <button on:click={() => signOut()} class="button -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign out</button>
               </div>
               {:else}

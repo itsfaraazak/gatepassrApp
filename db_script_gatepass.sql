@@ -75,16 +75,21 @@ ADD COLUMN guardian_name VARCHAR(100),
 ADD COLUMN guardian_relation VARCHAR(100),
 ADD COLUMN guardian_email VARCHAR(100);
 
+CREATE TABLE IF NOT EXISTS guardian
+(
+    guardian_id integer NOT NULL DEFAULT nextval('parent_parent_id_seq'::regclass),
+    primary_guardian_email character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    secondary_guardian_email character varying(100) COLLATE pg_catalog."default",
+    primary_contactnumber character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    seconday_contactnumber character varying(15) COLLATE pg_catalog."default",
+    created_on timestamp without time zone DEFAULT now(),
+    created_by character varying(100) COLLATE pg_catalog."default",
+    student_list jsonb,
+    CONSTRAINT parent_pkey PRIMARY KEY (guardian_id),
+    CONSTRAINT parent_primary_guardian_email_key UNIQUE (primary_guardian_email)
+)
 
 
-CREATE TABLE parent (
-	parent_id SERIAL NOT NULL PRIMARY KEY,
-	primary_guardian_email VARCHAR(100) UNIQUE NOT NULL,
-	secondary_guardian_email VARCHAR(100),
-	primary_contactnumber VARCHAR(15) NOT NULL,
-	seconday_contactnumber VARCHAR(15),
-	createdon  TIMESTAMP DEFAULT now()
-);
 CREATE TABLE student (
 	student_id SERIAL NOT NULL PRIMARY KEY,
 	student_email VARCHAR(100) UNIQUE NOT NULL,
@@ -93,3 +98,6 @@ CREATE TABLE student (
 	parent_id int NOT NULL,
 	createdon TIMESTAMP DEFAULT now()
 )
+
+-- Alter TABLE public.guardian
+-- ADD COLUMN student_list JSONB

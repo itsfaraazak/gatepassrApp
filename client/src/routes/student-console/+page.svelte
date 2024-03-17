@@ -44,7 +44,7 @@
     <html lang="en-US" class="h-full bg-gray-100">
         <head>
             <meta charset="utf-8"/>
-            <title>Gatepassr Management Console</title>
+            <title>Gatepassr Student Console</title>
         </head>
         <body class="h-full">
           <div class="min-h-full">
@@ -52,7 +52,7 @@
             
           <div class="mx-4 mt-16 py-6 sm:mx-12">
             <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
-              <Breadcrumb currentpage="Security Console"/>
+              <Breadcrumb currentpage="Student Console"/>
             </div>
             <!-- page header -->
             <div class="mx-4 mt-8 mb-6 lg:flex lg:items-center lg:justify-between">

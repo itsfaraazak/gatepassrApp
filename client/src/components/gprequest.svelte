@@ -5,26 +5,8 @@
     export let grades
     export let min_date
     export let  profiledata
-    //let selected =0
-    // console.log(profiledata.student_list[0])
-	// let gatepass_req={
-    //     student_name :profiledata.student_list[selected]?.student_name,
-    //     grade: profiledata.student_list[selected]?.grade,
-    //     student_type: "",
-    //     exit_time: "",
-    //     guardian_name: "",
-    //     guardian_relation: "",
-    //     guardian_email: "",
-    //     reason_for_gatepass: ""
-    // }
-    // console.log(gatepass_req);
-	// const onChange = () => {
-	// 	selected = selected
-    //     console.log(selected)
-	// }
-
     
-    </script>
+</script>
     
     <form action = "{gatepassrAPIurl}/submit/gatepassrequest" method="POST" class="mx-4 mt-4 mb-4 lg:flex lg:items-center lg:justify-between">
         <div class="space-y-4">
@@ -61,42 +43,12 @@
                     <input type="radio" id="3" name="student_type" value="3" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
                         <label class="block text-sm font-medium leading-6 text-gray-900" for="3">Boarder</label>
 
-                    <!-- {#each student_type as user}
-                        <input type="radio" id={user[0]} name="student_type" value={user[0]} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                        <label class="block text-sm font-medium leading-6 text-gray-900" for={user[0]}>{user[1]}</label>
-                    {/each} -->
                 </div>
             </div>
            </div>
             
-            <!-- <div class="mt-5">
-                <h2 class="text-base font-semibold leading-7 text-gray-900">You are a...</h2>
-                <div class="mt-3 space-y-6">
-    
-                    <div class="mt-3 space-y-3">
-                    <div class="flex items-center gap-x-3">
-                        <input type="radio" id="1" name="student_type" value="1" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                            <label class="block text-sm font-medium leading-6 text-gray-900" for="1">Day Scholar</label>
-                        <input type="radio" id="2" name="student_type" value="2" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                            <label class="block text-sm font-medium leading-6 text-gray-900" for="2">Weekly Boarder</label>
-                        <input type="radio" id="3" name="student_type" value="3" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"/>
-                            <label class="block text-sm font-medium leading-6 text-gray-900" for="3">Boarder</label>
-    
-                    
-                    </div>
-                </div>
-            </div> -->
             <div class="mt-5">
-                <!-- <label for="grade_select" class="text-base font-semibold leading-7 text-gray-900">Which grade student is in?</label>
-                <select name="grade" id="grade" class="mt-4 mx-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <option value="">Select grade</option>
-                    {#each grades as grade}
-                        <option value={grade.id}>
-                            {grade.text}
-                        </option>
-                    {/each}
-                </select> -->
-    
+               
             <div class="mt-5 col-span-full">
             <label for="exit-time" class="text-base font-semibold leading-7 text-gray-900">When will you be leaving school?</label>
             <input class="mt-4 mx-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

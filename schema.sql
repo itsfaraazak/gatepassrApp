@@ -317,3 +317,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.student
     OWNER to gp_admin;
+
+INSERT INTO public.approval_teachers(teacher_email)
+VALUES('jovella.dias@indusschoolpune.com')
+
+INSERT INTO public.approval_teachers(teacher_email,student_type_id)
+VALUES('swet.anubha@indusschoolpune.com',1)

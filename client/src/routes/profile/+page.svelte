@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 import { gatepassrAPI } from "$lib/gatepassrAPI";
 
 import {grades} from '../../config'
-import Student from '$components/student.svelte';
+
 import { page } from '$app/stores';
 
 
@@ -29,33 +29,31 @@ let  profiledata={
   student_list: studentlist,
   created_by:useremail
 }
-//let profiledata:any;
+
+async function getProfile(){
+  
+  const response = await fetch(gatepassrAPI +"/submit/profile", {
+     method: "POST",
+     body: JSON.stringify({
+         user_email: useremail
+     }),
+ })
+ .then(response => response.json())
+ .then(data => {getprofiledata = data } )
+
+ return getprofiledata;
+}
+
 onMount( async () => {
-    await fetch(gatepassrAPI + "/recieve/grades")
+      await fetch(gatepassrAPI + "/recieve/grades")
           .then( response => response.json() )
           .then( data => { student_grade = data } )
-         // let bearer =(localStorage.getItem("jwtToken"))
     
-    // let response =  fetch(gatepassrAPI + "/recieve/getprofile",{
-    //       method: "POST", // *GET, POST, PUT, DELETE, etc.
-    //       mode: "no-cors", // no-cors, *cors, same-origin
-    //       cache: "no-cache",
-    //       credentials: "include",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(userdata)
-    //     });
-
-    //     getprofiledata = response.then(data=>data.json());
-    //     console.log(getprofiledata);
-
-    await fetch(gatepassrAPI + "/recieve/profile")
-      .then( response => response.json() )
-      .then( data => { getprofiledata = data} )
-
-      let profiledataobj =  getprofiledata[0]
-      console.log(profiledataobj)
+      getprofiledata = await getProfile();
+    
+      let profiledataobj =  getprofiledata[0];
+      //console.log(profiledataobj)
+      
       profiledata.guardian_id = profiledataobj.guardian_id;
       profiledata.primary_guardian_email = profiledataobj.primary_guardian_email;
       profiledata.secondary_guardian_email=profiledataobj.secondary_guardian_email;
@@ -89,13 +87,13 @@ function save_profile()
   console.log(profiledata);
   let response =  fetch(gatepassrAPI+"/submit/profiledata",{
     method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "no-cors", // no-cors, *cors, same-origin
-    cache: "no-cache",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    // mode: "no-cors", // no-cors, *cors, same-origin
+    // cache: "no-cache",
+    // credentials: "include",
+    // headers: {
+    //   "Content-Type": "application/json",
+    //   // 'Content-Type': 'application/x-www-form-urlencoded',
+    // },
     body: JSON.stringify(profiledata)
   });
   let res = response.then(data=>data.json());

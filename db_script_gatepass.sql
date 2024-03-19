@@ -101,3 +101,83 @@ CREATE TABLE student (
 
 -- Alter TABLE public.guardian
 -- ADD COLUMN student_list JSONB
+
+-- PROCEDURE: public.profiledata(character varying, character varying, character varying, character varying, character varying)
+
+-- DROP PROCEDURE IF EXISTS public.profiledata(character varying, character varying, character varying, character varying, character varying);
+
+CREATE OR REPLACE PROCEDURE public.profiledata(
+	IN _primary_guardian_email character varying,
+	IN _primary_contactnumber character varying,
+	IN _secondary_guardian_email character varying,
+	IN _seconday_contactnumber character varying,
+	IN _created_by character varying,
+    IN _student_list jsonb)
+LANGUAGE 'sql'
+AS $BODY$
+-- create or update profile data
+ 
+   INSERT INTO public.guardian(primary_guardian_email,secondary_guardian_email
+							,primary_contactnumber
+							,seconday_contactnumber
+							,created_by, student_list)
+	values(_primary_guardian_email,_secondary_guardian_email
+							,_primary_contactnumber
+							,_seconday_contactnumber
+		  					,_created_by,_student_list)
+
+$BODY$;
+ALTER PROCEDURE public.profiledata(character varying, character varying, character varying, character varying, character varying)
+    OWNER TO gp_admin;
+
+
+DROP FUNCTION profiledata
+CREATE OR REPLACE FUNCTION public.profiledata(
+	IN _guardian_id int,
+	IN _primary_guardian_email character varying,
+	IN _primary_contactnumber character varying,
+	IN _secondary_guardian_email character varying,
+	IN _seconday_contactnumber character varying,
+	IN _created_by character varying,
+    IN _student_list jsonb)
+RETURNS 
+TABLE(guardian_id integer,primary_guardian_email character varying
+			  ,primary_contactnumber character varying,secondary_guardian_email character varying,seconday_contactnumber character varying,created_by character varying,student_list jsonb)
+LANGUAGE 'plpgsql'
+AS 
+$$
+begin
+-- create or update profile data
+IF guardianid = 0 then
+   INSERT INTO public.guardian(primary_guardian_email,secondary_guardian_email
+							,primary_contactnumber
+							,seconday_contactnumber
+							,created_by, student_list)
+	values(_primary_guardian_email,_secondary_guardian_email
+							,_primary_contactnumber
+							,_seconday_contactnumber
+		  					,_created_by,_student_list);
+
+else
+  UPDATE guardian
+  SET secondary_guardian_email =_secondary_guardian_email
+	,primary_contactnumber =_primary_contactnumber
+	,seconday_contactnumber =_seconday_contactnumber
+	,student_list =_student_list
+  WHERE guardian_id = _guardian_id;
+end if;
+
+
+RETURN QUERY SELECT  
+     guardian_id,
+	 primary_guardian_email,
+	 primary_contactnumber,
+	 secondary_guardian_email,
+	 seconday_contactnumber,
+	 created_by,
+     student_list
+    FROM guardian
+	WHERE primary_guardian_email = _primary_guardian_email
+	LIMIT 1;
+end;
+$$;

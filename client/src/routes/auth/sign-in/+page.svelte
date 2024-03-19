@@ -99,11 +99,11 @@
             </p>
             <button on:click={() => signOut()} class="button flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign out</button>
             {:else}
-                <button on:click={() => signIn("azure-ad")} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                <button on:click={() => signIn("azure-ad",{redirect: false, callbackUrl: "/management-console"})} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
                     Sign In with Microsoft
                 </button>
 
-                <button on:click={() => signIn("google")} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
+                <button on:click={() => signIn("google",{redirect: false, callbackUrl: "/status-console"})} class="flex w-full justify-center rounded-md bg-indigo-600 mt-1 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" >
                     Sign In with Google
                 </button>
 

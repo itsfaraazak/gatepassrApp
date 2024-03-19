@@ -83,16 +83,4 @@ def send_request(data):
     return request
 
 
-@bp.route("/profile", methods = ["GET"])
-def get_profile():
-    useremail="itsyasmeenkhan@gmail.com"
-    query = f"""Select guardian_id, primary_guardian_email ,secondary_guardian_email,primary_contactnumber,seconday_contactnumber, student_list from guardian Where created_by='{useremail}' order by created_on  desc Limit 1;"""
-    print(query)
-    
-   
-    dbdata =data.getdata_Json(query)
-    print(dbdata)
-    print(type(dbdata))
-    request = json.dumps(dbdata)
-    #request.headers.add("Access-Control-Allow-Origin", "*")
-    return request
+

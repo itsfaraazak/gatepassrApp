@@ -45,18 +45,22 @@
           </svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="{base}/student-console" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+      <div class="hidden pb-12  lg:flex lg:gap-x-12">
+        <a href="{base}/status-console" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
         <a href="{base}/request-a-gatepass" class="text-sm font-semibold leading-6 text-gray-900">Request Gatepass</a>
         <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
         <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
-        <a href="{base}/home" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
+        <a href="{base}/about-us" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <div class="hidden  px-1 lg:flex lg:flex-1 lg:justify-end">
           {#if data.session}
           <span>
-            <a href="{base}/profile" class="text-sm font-semibold leading-6 text-gray-900">Profile</a><br/>
-              <strong>{data.session.user?.name ?? "User"}</strong>
+            
+              <strong>{data.session.user?.name ?? "User"}</strong><br/>
+              <a href="{base}/profile" class="text-sm font-semibold leading-6 text-gray-900">Profile</a><br/>
+              <a href="{base}/auth/signout" class="text-sm font-semibold leading-6 text-gray-900">Sign out</a>
+              
+             
           </span>
           {:else}
             <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">

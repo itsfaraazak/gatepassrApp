@@ -1,18 +1,25 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
-import type { Handle} from '@sveltejs/kit';
 
-import GitHub from '@auth/core/providers/github';
-import Google from '@auth/core/providers/google';
-import Auth from "@auth/core"
-import AzureAd from "@auth/core/providers/azure-ad"
-import { GITHUB_ID, GITHUB_SECRET,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET, AZURE_AD_CLIENT_ID, AZURE_AD_CLIENT_SECRET, AZURE_AD_TENANT_ID} from '$env/static/private';
+import { redirect, type Handle } from '@sveltejs/kit';
+import { handle as authenticationHandle } from './auth';
+import { sequence } from '@sveltejs/kit/hooks';
 
-export const { handle, signIn, signOut } = SvelteKitAuth({
-	providers: [
-		GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET }),
-		Google({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),
-		AzureAd({ clientId: AZURE_AD_CLIENT_ID, clientSecret: AZURE_AD_CLIENT_SECRET, tenantId: AZURE_AD_TENANT_ID }),
-	],
-	debug:true,
-	trustHost:true,
-});
+async function authorizationHandle({ event, resolve }) {
+  // Protect any routes under /authenticated
+  //if (event.url.pathname.startsWith('/home') || event.url.pathname.startsWith('/management-console') || event.url.pathname.startsWith('/profile') || event.url.pathname.startsWith('/request-a-gatepass') || event.url.pathname.startsWith('/security-console') || event.url.pathname.startsWith('/student-console')) {
+  if (event.url.pathname == '/home') {
+ 	const session = await event.locals.auth();
+    if (!session) {
+      // Redirect to the signin page
+      throw redirect(303, '/auth/signin');
+    }
+  }
+
+  // If the request is still here, just proceed as normally
+  return resolve(event);
+}
+
+// First handle authentication, then authorization
+// Each function acts as a middleware, receiving the request handle
+// And returning a handle which gets passed to the next function
+export const handle: Handle = sequence(authenticationHandle, authorizationHandle)

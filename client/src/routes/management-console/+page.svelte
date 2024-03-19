@@ -36,8 +36,8 @@ function toggleHamburgerMenu() {
 }
 
 function addManualRequest() {
-    // goto('/management-console/add-manual-request')
-    goto(base +'/request-a-gatepass')
+    goto('/management-console/add-manual-request')
+    //goto(base +'/request-a-gatepass')
 }
   
   // @ts-ignore

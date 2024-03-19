@@ -55,19 +55,20 @@ def approve_gatepass_request():
 
 @bp.route("/profiledata", methods=["POST"])   
 def submit_profile():
-    print("Profile")
-    #try:
-    """     data = request.data
-    print(data)
-    """
+   
     profile_data = json.loads(request.data)
     print(profile_data)
-    print(type(profile_data))
-    
+
+    jdata = json.dumps(profile_data["student_list"])
+  
     #update two tables
-    
-    query = f"""CALL profiledata('{profile_data["primary_guardian_name"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_name"]}','{profile_data["secondary_contact_number"]}','testing@abc.com')"""
-    print(query)
+    #query = f"""SELECT  * FROM profiledatafunction('{profile_data["guardian_id"]}','{profile_data["primary_guardian_email"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_email"]}','{profile_data["secondary_contact_number"]}','{profile_data["created_by"]}','{jdata}');"""
+    if profile_data["guardian_id"] == 0:
+       query = f"""CALL profiledata('{profile_data["primary_guardian_email"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_email"]}','{profile_data["secondary_contact_number"]}','{profile_data["created_by"]}','{jdata}')"""
+       print(query)
+    else:
+        query = f"""CALL profiledataupdate('{profile_data["guardian_id"]}','{profile_data["primary_guardian_email"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_email"]}','{profile_data["secondary_contact_number"]}','{profile_data["created_by"]}','{jdata}')"""
+      
     data.commandquery(query)
     return("Profile saved")
     #except:

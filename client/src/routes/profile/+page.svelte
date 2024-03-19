@@ -3,46 +3,85 @@ import { onMount } from 'svelte';
 import { gatepassrAPI } from "$lib/gatepassrAPI";
 
 import {grades} from '../../config'
-    import Student from '$components/student.svelte';
-let student_grade: any[] = []
+import Student from '$components/student.svelte';
+import { page } from '$app/stores';
 
-onMount( async () => {
-      // fetch(gatepassrAPI + "/recieve/studenttype")
-      //     .then( response => response.json() )
-      //     .then( data => { student_type = data } )
-      fetch(gatepassrAPI + "/recieve/grades")
-          .then( response => response.json() )
-          .then( data => { student_grade = data } )
-          let bearer =(localStorage.getItem("jwtToken"))
-      
-  });
+
+let useremail = $page?.data?.session?.user?.email;
 let studentlist: any[] =[]
 let studentname ="";
 let studentemail ="";
+let userdata={
+  useremail:useremail,
+  username:$page?.data?.session?.user?.name
+}
+let studentgrade: any;
 
-let profiledata={
-  primary_guardian_name:"",
-  secondary_guardian_name:"",
+let student_grade: any[] = []
+let getprofiledata:any;
+
+let  profiledata={
+  guardian_id: 0,
+  primary_guardian_email: "",
+  secondary_guardian_email:"",
   primary_contact_number:"",
   secondary_contact_number:"",
-  studentlist: studentlist
+  student_list: studentlist,
+  created_by:useremail
 }
+//let profiledata:any;
+onMount( async () => {
+    await fetch(gatepassrAPI + "/recieve/grades")
+          .then( response => response.json() )
+          .then( data => { student_grade = data } )
+         // let bearer =(localStorage.getItem("jwtToken"))
+    
+    // let response =  fetch(gatepassrAPI + "/recieve/getprofile",{
+    //       method: "POST", // *GET, POST, PUT, DELETE, etc.
+    //       mode: "no-cors", // no-cors, *cors, same-origin
+    //       cache: "no-cache",
+    //       credentials: "include",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(userdata)
+    //     });
+
+    //     getprofiledata = response.then(data=>data.json());
+    //     console.log(getprofiledata);
+
+    await fetch(gatepassrAPI + "/recieve/profile")
+      .then( response => response.json() )
+      .then( data => { getprofiledata = data} )
+
+      let profiledataobj =  getprofiledata[0]
+      console.log(profiledataobj)
+      profiledata.guardian_id = profiledataobj.guardian_id;
+      profiledata.primary_guardian_email = profiledataobj.primary_guardian_email;
+      profiledata.secondary_guardian_email=profiledataobj.secondary_guardian_email;
+
+      profiledata.student_list = profiledataobj.student_list;
+      profiledata.primary_contact_number=profiledataobj.primary_contactnumber;
+      profiledata.secondary_contact_number=profiledataobj.seconday_contactnumber;
+  });
+
 
 
 function add_student(){
-  if(studentemail !="" && studentname !="")
+  if(studentemail !="" && studentname !="" &&  studentgrade != "")
   {
-    studentlist =[...studentlist,{student_name:studentname, student_email:studentemail, editing: false}]
-    profiledata.studentlist = studentlist
+    studentlist =[...studentlist,{student_name:studentname, student_email:studentemail, grade: studentgrade}]
+    profiledata.student_list = studentlist
     studentname ="";
     studentemail ="";
+    studentgrade="";
   }
 }
 
 function deletestudent(index: number){
   studentlist.splice(index)
   studentlist = studentlist
-  profiledata.studentlist = studentlist
+  profiledata.student_list = studentlist
 }
 
 function save_profile()
@@ -71,7 +110,7 @@ function save_profile()
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
           
-          <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-8">
+          <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-8">
             
             <div class="sm:col-span-3">
               <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Name</label>
@@ -96,17 +135,31 @@ function save_profile()
               </div>
               
             </div>
-            <div class="sm:col-span-2">
+            <div class="sm:col-span-1">
+              <label for="grade" class="block text-sm font-medium leading-6 text-gray-900">Grade</label>
+              
+              <select bind:value={studentgrade} id="grade" class="mt-2 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value="">Grade</option>
+                  {#each grades as grade}
+                      <option value={grade.id}>
+                          {grade.text}
+                      </option>
+                  {/each}
+              </select>
+            </div>
+            <div class="sm:col-span-1">
+              <label for="add" class="block text-sm font-medium leading-6 text-gray-900">Register</label>
+            
                 <div class="flex rounded-md">
-                  <button on:click={add_student}
-                    class="mt-8 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <button on:click={add_student} id="add"
+                    class="mt-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     Add
                   </button>
                 </div>
             </div>
-            {#each studentlist as student, index}
+            {#each profiledata.student_list as student, index}
             <div class="sm:col-span-3">
-              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Studentname</label>
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Name</label>
               <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input type="text" id="username"  
@@ -116,7 +169,7 @@ function save_profile()
               </div>
             </div>
             <div class="sm:col-span-3">
-              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">StudentEmail</label>
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Email</label>
               <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input type="email" id="username"  
@@ -126,13 +179,26 @@ function save_profile()
               </div>
               
             </div>
-            <div class="sm:col-span-2">
+            <div class="sm:col-span-1">
+              <label for="grade" class="block text-sm font-medium leading-6 text-gray-900">Grade</label>
+              <select bind:value={student.grade} id="grade" class="mt-2 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value="">Grade</option>
+                  {#each grades as grade}
+                      <option value={grade.id}>
+                          {grade.text}
+                      </option>
+                  {/each}
+              </select>
+            </div>
+            <div class="sm:col-span-1">
+              <label for="delete" class="block text-sm font-medium leading-6 text-gray-900">DeRegister</label>
+            
               <div class="flex rounded-md">
-                <button class="mt-8 rounded-md bg-indigo-600 px-3 py-2 mx-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <!-- <button class="mt-8 rounded-md bg-indigo-600 px-3 py-2 mx-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Edit
-                </button>
-                <button on:click={()=> deletestudent(index)}
-                class="mt-8 rounded-md bg-indigo-600 px-3 py-2 mx-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                </button> -->
+                <button on:click={()=> deletestudent(index)} id="delete"
+                class="mt-2 rounded-md bg-indigo-600 px-3 py-2 mx-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Delete
                 </button>
               </div>
@@ -145,8 +211,8 @@ function save_profile()
                 <div class="mt-2">
                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input type="email" 
-                    id="gd_primary_email" 
-                    bind:value={profiledata.primary_guardian_name}
+                    id="gd_primary_email" placeholder={useremail}
+                    bind:value={profiledata.primary_guardian_email}
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
                     >
                   </div>
@@ -173,7 +239,7 @@ function save_profile()
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input type="email"
                   id="username" 
-                  bind:value={profiledata.secondary_guardian_name} 
+                  bind:value={profiledata.secondary_guardian_email} 
                   class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                 </div>
               </div>

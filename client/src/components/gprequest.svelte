@@ -5,6 +5,25 @@
     export let grades
     export let min_date
     export let  profiledata
+    //let selected =0
+    // console.log(profiledata.student_list[0])
+	// let gatepass_req={
+    //     student_name :profiledata.student_list[selected]?.student_name,
+    //     grade: profiledata.student_list[selected]?.grade,
+    //     student_type: "",
+    //     exit_time: "",
+    //     guardian_name: "",
+    //     guardian_relation: "",
+    //     guardian_email: "",
+    //     reason_for_gatepass: ""
+    // }
+    // console.log(gatepass_req);
+	// const onChange = () => {
+	// 	selected = selected
+    //     console.log(selected)
+	// }
+
+    
     </script>
     
     <form action = "{gatepassrAPIurl}/submit/gatepassrequest" method="POST" class="mx-4 mt-4 mb-4 lg:flex lg:items-center lg:justify-between">
@@ -12,18 +31,23 @@
         <div class="border-b border-gray-900/10 pb-5">
             <h1 class="text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Request for a gatepass</h1>
             
-            {#if profiledata}
+            
             <div class="mt-10 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-7">
             <div class="sm:col-span-3">
               <label for="username" class="text-base font-semibold leading-7 text-gray-900">Student Name</label>
               <div class="mt-2">
-                <select  class="rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <select name="student_list" class="rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     {#each profiledata.student_list as student, index}
-                        <option value={student.student_email}>
-                            {student.student_name}-Grade {student.grade}
+                        <option value={student.student_name},{student.student_email},{student.grade}>
+                            {student.student_name}  (Grade-{student.grade})
                         </option>
                     {/each}
                 </select>
+                
+                <!-- <input type="text" id="grade" name="grade" />-->
+                <input id="name" class="hidden" name="student_email"/> 
+                     
+                
               </div>
             </div>
             
@@ -44,7 +68,7 @@
                 </div>
             </div>
            </div>
-            {/if}
+            
             <!-- <div class="mt-5">
                 <h2 class="text-base font-semibold leading-7 text-gray-900">You are a...</h2>
                 <div class="mt-3 space-y-6">
@@ -78,7 +102,7 @@
             <input class="mt-4 mx-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             type="datetime-local"
             id="exit-time"
-            name="exit-time" min={min_date} value="{min_date}"/>
+            name="exit-time" min={min_date} bind:value="{min_date}"/>
             </div>
             <!-- carpool radio box + car number -->
             

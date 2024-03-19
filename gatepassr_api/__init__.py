@@ -88,6 +88,8 @@ def create_app(test_config=None):
     app.register_blueprint(post_data.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(qr_handling.bp)
+
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 
     #with app.app_context():
     #    app.register_blueprint(auth.bp)
     

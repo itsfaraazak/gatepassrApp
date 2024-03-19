@@ -28,7 +28,19 @@
     var date = new Date();
 
     let minimum_date= ( date.getFullYear() + "-"+("0" + (date.getMonth() + 1)).slice(-2) + "-"+ ("0" + date.getDate()).slice(-2) + "T" + ("0" + date.getHours() ).slice(-2) + ":"+ ("0" + date.getMinutes()).slice(-2) );
- 
+    async function getProfile(){
+  
+        const response = await fetch(gatepassrAPI +"/submit/profile", {
+            method: "POST",
+            body: JSON.stringify({
+                user_email: useremail
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {getprofiledata = data } )
+
+    return getprofiledata;
+    }
     onMount( async () => {
         // fetch(gatepassrAPI + "/recieve/studenttype")
         //     .then( response => response.json() )
@@ -38,10 +50,11 @@
             .then( data => { student_grade = data } )
            // let bearer =(localStorage.getItem("jwtToken"))
         
-           await fetch(gatepassrAPI + "/recieve/profile")
-      .then( response => response.json() )
-      .then( data => { getprofiledata = data} )
-
+    //        await fetch(gatepassrAPI + "/recieve/profile")
+    //   .then( response => response.json() )
+    //   .then( data => { getprofiledata = data} )
+      getprofiledata = await getProfile();
+    
       let profiledataobj =  getprofiledata[0]
       console.log(profiledataobj)
       profiledata.guardian_id = profiledataobj.guardian_id;

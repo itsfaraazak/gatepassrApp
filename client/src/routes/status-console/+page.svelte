@@ -1,28 +1,37 @@
 <script>
-// @ts-nocheck
-
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
   import Breadcrumb from '$components/breadcrumb.svelte';
   import Table from '$components/table.svelte';
   import { gatepassrAPI } from "$lib/gatepassrAPI";
   import { base } from '$app/paths';
+  import { page } from '$app/stores';
 
- // import { _get_requests } from '../+layout';
+
+  // @ts-ignore
   /**
-   * @type {any[]}
-   */
-  let requests = []
+     * @type {never[]}
+     */
+  let requests= []
   //let testreq = _get_requests
   /**
      * @type {Response}
      */
   let return_status;
+  let useremail = $page?.data?.session?.user?.email;
   onMount( async () => {
-      fetch(gatepassrAPI +"/recieve/todaysrequests")
-          .then( response => response.json() )
-          .then( data => { requests = data } )
-  });
+
+      const response = await fetch(gatepassrAPI +"/submit/userrequests", {
+        method: "POST",
+        body: JSON.stringify({
+            user_email: useremail
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {requests = data })
+      console.log(requests);
+      });
+
 
   function toggleHamburgerMenu() {
       var mobile_menu = document.getElementById("mobile-menu");
@@ -38,13 +47,14 @@
   function addManualExit() {
     goto(base +'/request-a-gatepass')
   }
+
        
 </script>
     
     <html lang="en-US" class="h-full bg-gray-100">
         <head>
             <meta charset="utf-8"/>
-            <title>Gatepassr Student Console</title>
+            <title>Gatepassr Console</title>
         </head>
         <body class="h-full">
           <div class="min-h-full">
@@ -52,7 +62,7 @@
             
           <div class="mx-4 mt-16 py-6 sm:mx-12">
             <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
-              <Breadcrumb currentpage="Student Console"/>
+            <Breadcrumb currentpage="Status Console"/>
             </div>
             <!-- page header -->
             <div class="mx-4 mt-8 mb-6 lg:flex lg:items-center lg:justify-between">
@@ -63,16 +73,22 @@
               <div class="mt-5 flex lg:ml-4 lg:mt-0">
                 <span class="block">
                 </span>
-                        
               </div> 
             </div>
           
             <!-- page header end -->
             <!-- table -->
             <div class="mx-4 mt-4 mb-2 relative flex flex-col h-full text-gray-700 bg-white shadow-md rounded-xl ">
+              <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white rounded-none bg-clip-border">
 
+                  <div class="justify-between mb-1 flex-col">
+                    <button type="button" on:click={addManualExit} class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                      Request Gatepass
+                    </button>
+                    </div>
+              </div>
               <div class="px-1 overflow-auto">
-                <Table requests={requests} ></Table>
+                <Table req={requests} approveReq=""/>
               </div>
               <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">

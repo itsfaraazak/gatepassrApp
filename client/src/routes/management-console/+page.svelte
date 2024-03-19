@@ -9,6 +9,9 @@ import Breadcrumb from '$components/breadcrumb.svelte';
 
 import { gatepassrAPI } from "$lib/gatepassrAPI";
 import { base } from '$app/paths';
+import { page } from '$app/stores';
+
+let user_email = $page?.data?.session?.user?.email
 /**
  * @type {any[]}
  */
@@ -17,11 +20,17 @@ let requests = []
  * @type {Response}
  */
 let return_status;
-
-onMount( async () => {
-    fetch(gatepassrAPI +"/recieve/pendingrequests")
+let isauthorized= false;
+function get_Requests()
+{
+  fetch(gatepassrAPI +"/recieve/pendingrequests")
         .then( response => response.json() )
         .then( data => { requests = data } )
+}
+
+onMount( async () => {
+  get_Requests();
+  await getRole();
 });
 
 function toggleHamburgerMenu() {
@@ -39,7 +48,13 @@ function addManualRequest() {
     goto('/management-console/add-manual-request')
     //goto(base +'/request-a-gatepass')
 }
-  
+function reloadPage() {
+        const thisPage = window.location.pathname;
+        console.log('goto ' + thisPage);
+        goto('/').then(
+            () => goto(thisPage)
+        );
+}
   // @ts-ignore
 function approveRequest(request_id) {
   console.log(request_id);
@@ -52,9 +67,6 @@ function approveRequest(request_id) {
     },
     // @ts-ignore
     Accept: "text/plain",
-    //redirect: "follow", // manual, *follow, error
-    //referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //body: '{"request": "'+ request_id +'"}'
     body: request_id
   });
 
@@ -64,7 +76,7 @@ function approveRequest(request_id) {
   if (response.ok) {
       //const data =  response.json();
       console.log(response.data)
-      //return data;
+      
   } 
   else 
   {
@@ -72,7 +84,23 @@ function approveRequest(request_id) {
       /* Handle the error returned by the HTTP request */
       // return {error: {status: response.status, statusText: response.statusText}};
   };
-} 
+  reloadPage();
+}
+let admindata;
+async function getRole(){
+  await fetch(gatepassrAPI +"/submit/isauthorized", {
+     method: "POST",
+    //  mode: "no-cors",
+     body: JSON.stringify({
+         user_email: user_email,
+     })
+ })
+ .then(response => response.json())
+ .then(data => {admindata = data});
+
+  console.log(admindata[0]);
+}
+
 </script>
 
 <html lang="en-US" class="h-full bg-gray-100">
@@ -86,23 +114,6 @@ function approveRequest(request_id) {
             
           <div class="mx-4 mt-16 py-6 sm:mx-12">
             <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
-              <!-- <ol class="flex items-center whitespace-nowrap" aria-label="Breadcrumb">
-                <li class="inline-flex items-center">
-                  <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="#">
-                    Management Console
-                  </a>
-                  <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                </li>
-                <li class="inline-flex items-center">
-                  <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 dark:focus:text-blue-500" href="#">
-                    App Center
-                    <svg class="flex-shrink-0 mx-2 overflow-visible size-4 text-gray-400 dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                  </a>
-                </li>
-                <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate dark:text-gray-200" aria-current="page">
-                  Application
-                </li>
-              </ol> -->
               <Breadcrumb currentpage="Management Console"/>
             </div>
             <!-- page header -->

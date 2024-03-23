@@ -1,0 +1,71 @@
+generator client {
+  provider = "postgresql"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model approval_teachers {
+  teacher_id      Int           @id @default(autoincrement())
+  teacher_email   String        @db.VarChar(100)
+  student_type_id Int?          @default(autoincrement())
+  student_grade   String?       @db.VarChar(20)
+  is_admin        Boolean?      @default(false)
+  is_active       Boolean?      @default(false)
+  student_type    student_type? @relation(fields: [student_type_id], references: [student_type_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model guardian {
+  guardian_id              Int       @id(map: "parent_pkey") @default(autoincrement())
+  primary_guardian_email   String    @unique(map: "parent_primary_guardian_email_key") @db.VarChar(100)
+  secondary_guardian_email String?   @db.VarChar(100)
+  primary_contactnumber    String    @db.VarChar(15)
+  seconday_contactnumber   String?   @db.VarChar(15)
+  created_on               DateTime? @default(now()) @db.Timestamp(6)
+  created_by               String?   @db.VarChar(100)
+  student_list             Json?
+}
+
+model requests {
+  request_id         Int       @id @default(autoincrement())
+  student_name       String?   @db.VarChar(100)
+  student_email      String?   @db.VarChar(100)
+  student_grade      String?   @db.VarChar(2)
+  student_type_id    Int?
+  exit_time          DateTime? @db.Timestamptz(6)
+  approved_by        String?   @db.VarChar(50)
+  approved_at        DateTime? @db.Timestamptz(6)
+  request_created_at DateTime? @default(now()) @db.Timestamptz(6)
+  request_updated_at DateTime? @db.Timestamptz(6)
+  guardian_name      String?   @db.VarChar(100)
+  guardian_relation  String?   @db.VarChar(100)
+  guardian_email     String?   @db.VarChar(100)
+  reason             String?   @db.VarChar(500)
+}
+
+model student {
+  student_id    Int       @id @default(autoincrement())
+  student_email String    @unique @db.VarChar(100)
+  student_grade String    @db.VarChar(2)
+  student_type  Int
+  parent_id     Int
+  createdon     DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model student_type {
+  student_type_id   Int                 @id @default(autoincrement())
+  student_type      String?             @db.VarChar(20)
+  approval_teachers approval_teachers[]
+}
+
+model user_accounts {
+  user_id    Int       @id @default(autoincrement())
+  username   String    @unique @db.VarChar(50)
+  password   String    @db.VarChar(200)
+  email      String    @unique @db.VarChar(100)
+  created_at DateTime? @db.Timestamp(6)
+  last_login DateTime? @db.Timestamp(6)
+}

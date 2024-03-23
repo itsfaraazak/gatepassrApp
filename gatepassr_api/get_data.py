@@ -55,7 +55,7 @@ ORDER BY exit_time ASC;"""
 
 @bp.route("/todaysrequests", methods = ["GET"])
 def get_todays_requests():
-    query = """SELECT stname, stgrade, approvedat, exittime FROM get_todays_requests();"""
+    query = """SELECT stname, stgrade, approvedat,exittime FROM get_todays_requests();"""
     return send_request(data.query_db(query))
 
 

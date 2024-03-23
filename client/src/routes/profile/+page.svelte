@@ -5,7 +5,11 @@ import { gatepassrAPI } from "$lib/gatepassrAPI";
 import {grades} from '../../config'
 
 import { page } from '$app/stores';
+import {enhance} from '$app/forms'
+import type { Actions } from './$types';
+import toast , { Toaster } from 'svelte-french-toast';
 
+//export const form: ActionData;
 
 let useremail = $page?.data?.session?.user?.email;
 let studentlist: any[] =[]
@@ -20,7 +24,7 @@ let studentgrade: any;
 let student_grade: any[] = []
 let getprofiledata:any;
 
-let  profiledata={
+let profiledata={
   guardian_id: 0,
   primary_guardian_email: "",
   secondary_guardian_email:"",
@@ -45,6 +49,7 @@ async function getProfile(){
 }
 
 onMount( async () => {
+ 
       await fetch(gatepassrAPI + "/recieve/grades")
           .then( response => response.json() )
           .then( data => { student_grade = data } )
@@ -55,7 +60,7 @@ onMount( async () => {
       //console.log(profiledataobj)
       
       profiledata.guardian_id = profiledataobj.guardian_id;
-      profiledata.primary_guardian_email = profiledataobj.primary_guardian_email;
+      profiledata.primary_guardian_email = useremail ?? "";
       profiledata.secondary_guardian_email=profiledataobj.secondary_guardian_email;
 
       profiledata.student_list = profiledataobj.student_list;
@@ -68,7 +73,7 @@ onMount( async () => {
 function add_student(){
   if(studentemail !="" && studentname !="" &&  studentgrade != "")
   {
-    studentlist =[...studentlist,{student_name:studentname, student_email:studentemail, grade: studentgrade}]
+    studentlist =[...profiledata.student_list,{student_name:studentname, student_email:studentemail, grade: studentgrade}]
     profiledata.student_list = studentlist
     studentname ="";
     studentemail ="";
@@ -84,23 +89,27 @@ function deletestudent(index: number){
 
 function save_profile()
 {
+  profiledata.primary_guardian_email =useremail ?? "";
   console.log(profiledata);
   let response =  fetch(gatepassrAPI+"/submit/profiledata",{
     method: "POST", // *GET, POST, PUT, DELETE, etc.
-    // mode: "no-cors", // no-cors, *cors, same-origin
-    // cache: "no-cache",
-    // credentials: "include",
-    // headers: {
-    //   "Content-Type": "application/json",
-    //   // 'Content-Type': 'application/x-www-form-urlencoded',
-    // },
     body: JSON.stringify(profiledata)
   });
   let res = response.then(data=>data.json());
   console.log(res);
+  toast.success("Profile submitted!");
+}
+const submitProfile= ()=>{
+   return async ({result, update})=>{
+     switch(result.type){
+      case 'success':
+
+     }
+    await update()
+   }
 }
 </script>
-
+<Toaster />
 <div class="mx-4 mt-16 py-6 sm:mx-12">
 <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
   <form>
@@ -208,9 +217,10 @@ function save_profile()
                   Primary Guardian Email</label>
                 <div class="mt-2">
                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    
+                    <input type="hidden" bind:value={profiledata.primary_guardian_email}/>
                     <input type="email" 
-                    id="gd_primary_email" placeholder={useremail}
-                    bind:value={profiledata.primary_guardian_email}
+                    id="gd_primary_email" value={useremail} readonly
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
                     >
                   </div>
@@ -359,7 +369,8 @@ function save_profile()
   
     <div class="mt-6 flex items-center justify-end gap-x-6">
       <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-      <button type="submit" on:click={save_profile}
+      <button type="submit" 
+      on:click={save_profile}
       class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
     </div>
   </form>

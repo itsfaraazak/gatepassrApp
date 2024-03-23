@@ -46,10 +46,10 @@
         </button>
       </div>
       <div class="hidden pb-12  lg:flex lg:gap-x-12">
-        <a href="{base}/status-console" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
-        <a href="{base}/request-a-gatepass" class="text-sm font-semibold leading-6 text-gray-900">Request Gatepass</a>
-        <a href="{base}/management-console" class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
-        <a href="{base}/security-console" class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
+        <a href="{base}/status-console" data-sveltekit-preload-data class="text-sm font-semibold leading-6 text-gray-900">Home</a>
+        <a href="{base}/request-a-gatepass"  data-sveltekit-preload-data class="text-sm font-semibold leading-6 text-gray-900">Request Gatepass</a>
+        <a href="{base}/management-console" data-sveltekit-preload-data class="text-sm font-semibold leading-6 text-gray-900">Management Console</a>
+        <a href="{base}/security-console" data-sveltekit-preload-data class="text-sm font-semibold leading-6 text-gray-900">Security Console</a>
         <a href="{base}/about-us" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden  px-1 lg:flex lg:flex-1 lg:justify-end">

@@ -123,11 +123,14 @@
         <td class="p-4 border-b border-blue-gray-50">
 
           {#if r[6] == null}
+          <form method="POST" action="?/approverequest">
+            <input type="hidden" id="{r[7]}">
             <button name="btnapprove"
               class="relative h-10 w-full select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button" on:click|once ={approveReq(r[7])} id={r[7]}>
               <span>Approve</span>
           </button>
+         </form>
           {:else}
             <button
               class="relative h-10 w-full select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-gray-900 transition-all hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

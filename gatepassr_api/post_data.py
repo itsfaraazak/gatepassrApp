@@ -72,7 +72,8 @@ def submit_profile():
        print(query)
     else:
         query = f"""CALL profiledataupdate('{profile_data["guardian_id"]}','{profile_data["primary_guardian_email"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_email"]}','{profile_data["secondary_contact_number"]}','{profile_data["created_by"]}','{jdata}')"""
-      
+
+    print(query) 
     data.commandquery(query)
     return  "Profile saved"
     #except:

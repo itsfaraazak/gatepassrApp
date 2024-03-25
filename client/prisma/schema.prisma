@@ -1,6 +1,5 @@
 generator client {
-  provider = "postgresql"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -68,4 +67,18 @@ model user_accounts {
   email      String    @unique @db.VarChar(100)
   created_at DateTime? @db.Timestamp(6)
   last_login DateTime? @db.Timestamp(6)
+}
+
+model User {
+  id       String    @id
+  sessions Session[]
+  github_id Int @unique
+  username  String
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

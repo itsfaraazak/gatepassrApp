@@ -7,6 +7,7 @@ declare global {
 		interface Locals {
 			user: import("lucia").User | null;
 			session: import("lucia").Session | null;
+			user_email: ""
 		}
 		// interface PageData {}
 		// interface PageState {}

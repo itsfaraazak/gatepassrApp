@@ -1,9 +1,8 @@
 <script>
-    import prisma from "@prisma/client";
+    // @ts-ignore
+    export let data;
 
-
-    const client = new prisma.PrismaClient();
-    const abc = client.requests.findMany();
-    console.log(abc)
-
+    console.log(data.user);
 </script>
+
+

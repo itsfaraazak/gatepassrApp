@@ -2,14 +2,22 @@ export const prerender = true;
 import type { LayoutServerLoad } from "./$types"
 import type { Cookies } from '@sveltejs/kit';
 
-export const load = async (event) => {
-	const session = await event.locals.getSession();
+
+// export const load: PageServerLoad = async (event) => {
+// 	return {
+// 		username: await event.locals.user.username ?? ""
+// 	};
+// };
+
+
+/*  export const load = async (event) => {
+   const user = await event.locals.user;
     //createSession()
 	return {
-		session
+		user: user
 	};
 };
-
+ */
 // function createSession(cookies: Cookies) {
 
 // 	const sessionID = crypto.randomUUID();

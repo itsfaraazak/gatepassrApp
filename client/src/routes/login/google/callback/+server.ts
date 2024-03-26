@@ -41,7 +41,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
         });
 
         const googleUser = await response.json();
-       console.log(googleUser)
+        console.log(googleUser)
 /* 		const githubUserResponse = await fetch("https://api.github.com/user", {
 			headers: {
 				Authorization: `Bearer ${tokens.accessToken}`
@@ -75,7 +75,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				...sessionCookie.attributes
 			});
 		} else {
-			const userId = generateId(15);
 			const userId = generateId(15);
 			//generateId(15);
 

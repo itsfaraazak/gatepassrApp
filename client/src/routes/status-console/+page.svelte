@@ -21,6 +21,8 @@
   export let data;
   requests = data.requests;
   console.log(requests);
+  console.log("Testing locals");
+  console.log(data.user)
   let useremail = $page?.data?.session?.user?.email;
   
   function toggleHamburgerMenu() {
@@ -106,7 +108,7 @@
                   </thead>
                   <tbody>
                     <!-- row -->
-              
+                    
                     {#each requests as r}
                     <tr>
                       <td class="p-4 border-b border-blue-gray-50">

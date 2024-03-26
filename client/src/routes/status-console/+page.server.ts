@@ -4,8 +4,10 @@ import { gatepassrAPI } from "$lib/gatepassrAPI";
 
 export const load: PageServerLoad = async (event) => {
 
-  const useremail = await event.locals.user_email ;
-  const role_id = await event.locals.roleid;
+  const useremail = await event.locals.user ;
+  console.log("Status Console");
+  console.log(await event.locals);
+  //const role_id = await event.locals.roleid;
  
   const fetchUserRequests = async()=> {
     const responseProfile = await fetch(gatepassrAPI +"/submit/userrequests", {
@@ -20,7 +22,8 @@ export const load: PageServerLoad = async (event) => {
 
   return {
     user_email: useremail,
-    role_id:event.locals.roleid,
+    user: await event.locals.user,
+    //role_id:event.locals.roleid,
     requests: await fetchUserRequests(),
   };
 }

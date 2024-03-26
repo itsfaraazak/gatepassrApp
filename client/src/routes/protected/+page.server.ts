@@ -6,6 +6,11 @@ import type { Actions, PageServerLoad } from "./$types";
 
 
 export const load: PageServerLoad = async (event) => {
+/* 	console.log(event.locals.user)
+	console.log(event.locals.session)
+	console.log(event.locals.session)
+
+ */
 	if (!event.locals.user) redirect(302, "/login");
 
 	return {

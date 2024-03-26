@@ -1,8 +1,10 @@
 import { Lucia } from "lucia";
 import { dev } from "$app/environment";
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "$env/static/private";
+import { AZURE_AD_CLIENT_ID, AZURE_AD_CLIENT_SECRET, AZURE_AD_TENANT_ID, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from "$env/static/private";
 
 import { GitHub } from "arctic";
+
+import { MicrosoftEntraId } from "arctic";
 
 /* import { PostgresJsAdapter } from "@lucia-auth/adapter-postgresql";
 import postgres from "postgres";
@@ -56,3 +58,10 @@ export const github = new GitHub(
 	GITHUB_CLIENT_ID,
 	GITHUB_CLIENT_SECRET
 );
+
+export const entraID = new MicrosoftEntraId(
+	AZURE_AD_TENANT_ID,
+	AZURE_AD_CLIENT_ID,
+	AZURE_AD_CLIENT_SECRET,
+	"http://localhost:5173/login/microsoft/callback"
+)

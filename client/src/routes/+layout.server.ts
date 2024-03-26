@@ -2,13 +2,13 @@ export const prerender = true;
 import type { LayoutServerLoad } from "./$types"
 import type { Cookies } from '@sveltejs/kit';
 
-
-// export const load: PageServerLoad = async (event) => {
-// 	return {
-// 		username: await event.locals.user.username ?? ""
-// 	};
-// };
-
+/* 
+export const load: PageServerLoad = async (event) => {
+	return {
+		username: await event.locals.user
+	};
+};
+ */
 
 /*  export const load = async (event) => {
    const user = await event.locals.user;

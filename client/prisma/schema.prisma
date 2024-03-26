@@ -71,8 +71,7 @@ model user_accounts {
 
 model User {
   id            String    @id
-  provider_id   Int       @unique
-  //(map: "User_github_id_key")
+  provider_id   String    @unique
   username      String
   email         String?
   provider_name String?

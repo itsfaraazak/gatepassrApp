@@ -41,7 +41,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		//const existingUser = await db.table("user").where("github_id", "=", githubUser.id).get();
 		const existingUser = await prisma.user.findUnique({
 			where: {
-				provider_id: githubUser.id,
+				provider_id: String(githubUser.id),
 			},
 		})
 
@@ -65,7 +65,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			await prisma.user.create({
 				data: {
 					id: userId,
-					provider_id: githubUser.id,
+					provider_id: String(githubUser.id),
 					//github_id: 1234555,
 					username: githubUser.login,
 					//username: 'Userrrrr',

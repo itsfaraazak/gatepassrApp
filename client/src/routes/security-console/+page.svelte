@@ -11,10 +11,6 @@
    * @type {any[]}
    */
   let requests = []
-  //let testreq = _get_requests
-  /**
-     * @type {Response}
-     */
   let return_status;
   onMount( async () => {
       fetch(gatepassrAPI +"/recieve/todaysrequests")

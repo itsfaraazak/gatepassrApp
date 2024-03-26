@@ -108,15 +108,15 @@ function save_profile()
   }
   
 }
-const submitProfile= ()=>{
-   return async ({result, update})=>{
-     switch(result.type){
-      case 'success':
+// const submitProfile= ()=>{
+//    return async ({result, update})=>{
+//      switch(result.type){
+//       case 'success':
 
-     }
-    await update()
-   }
-}
+//      }
+//     await update()
+//    }
+// }
 </script>
 <!-- <Toaster /> -->
 <div class="mx-4 mt-16 py-6 sm:mx-12">

@@ -58,14 +58,11 @@ export async function GET(event: RequestEvent): Promise<Response> {
  */
 		// Replace this with your own DB client.
 		//const existingUser = await db.table("user").where("github_id", "=", githubUser.id).get();
-        console.log("testimg =====");
-		console.log(googleUser.sub);
-
         const existingUser = await prisma.user.findUnique({
             where : {
-                provider_id: Number(googleUser.sub),
-                //provider_name:"google",il.comelete 
-                //email: googleUser.email,
+                provider_id: googleUser.sub,
+                provider_name:"google", 
+                email: googleUser.email,
             },
         });
 
@@ -78,7 +75,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				...sessionCookie.attributes
 			});
 		} else {
-			const userId = 12345
+			const userId = generateId(15);
 			//generateId(15);
 
 			// Replace this with your own DB client.
@@ -92,8 +89,8 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 			await prisma.user.create({
 				data: {
-					id: String(userId),
-                    provider_id: Number(googleUser.sub),
+					id: userId,
+                    provider_id: googleUser.sub,
 					provider_name: "google",
 					username: googleUser.name,
 					email: googleUser.email,

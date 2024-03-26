@@ -9,17 +9,19 @@ import {enhance} from '$app/forms'
 import type { Actions } from './$types';
 import toast , { Toaster } from 'svelte-french-toast';
 
-//export const form: ActionData;
+export let data;
 
-let useremail = $page?.data?.session?.user?.email;
+let useremail = data.user_email;
 let studentlist: any[] =[]
 let studentname ="";
 let studentemail ="";
+
 let userdata={
   useremail:useremail,
   username:$page?.data?.session?.user?.name
 }
 let studentgrade: any;
+
 
 let student_grade: any[] = []
 let getprofiledata:any;
@@ -97,7 +99,14 @@ function save_profile()
   });
   let res = response.then(data=>data.json());
   console.log(res);
-  toast.success("Profile submitted!");
+  if(res.status =="200")
+  {
+    toast.success("Profile submitted!");
+  }
+  else{
+    toast.error("Something went wrong")
+  }
+  
 }
 const submitProfile= ()=>{
    return async ({result, update})=>{
@@ -109,7 +118,7 @@ const submitProfile= ()=>{
    }
 }
 </script>
-<Toaster />
+<!-- <Toaster /> -->
 <div class="mx-4 mt-16 py-6 sm:mx-12">
 <div class="mx-4 my-2 lg:flex lg:items-center lg:justify-between">
   <form>
@@ -120,10 +129,10 @@ const submitProfile= ()=>{
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-8">
             
             <div class="sm:col-span-3">
-              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Name</label>
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Name *</label>
               <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input type="text" 
+                  <input type="text"
                     id="username"  
                     bind:value={studentname}
                    class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
@@ -131,7 +140,7 @@ const submitProfile= ()=>{
               </div>
             </div>
             <div class="sm:col-span-3">
-              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Email</label>
+              <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Student Email *</label>
               <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input type="email" 
@@ -143,7 +152,7 @@ const submitProfile= ()=>{
               
             </div>
             <div class="sm:col-span-1">
-              <label for="grade" class="block text-sm font-medium leading-6 text-gray-900">Grade</label>
+              <label for="grade" class="block text-sm font-medium leading-6 text-gray-900">Grade *</label>
               
               <select bind:value={studentgrade} id="grade" class="mt-2 rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                   <option value="">Grade</option>
@@ -214,12 +223,12 @@ const submitProfile= ()=>{
              <p class="sm:col-span-8 border-b border-gray-900/10 pb-4"></p>
               <div class="sm:col-span-3">
                 <label for="username" class="block text-sm font-medium leading-6 text-gray-900">
-                  Primary Guardian Email</label>
+                  Primary Guardian Email *</label>
                 <div class="mt-2">
                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     
                     <input type="hidden" bind:value={profiledata.primary_guardian_email}/>
-                    <input type="email" 
+                    <input type="email" required 
                     id="gd_primary_email" value={useremail} readonly
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
                     >
@@ -228,10 +237,10 @@ const submitProfile= ()=>{
               </div>
               <div class="sm:col-span-3">
                 <label for="username" class="block text-sm font-medium leading-6 text-gray-900">
-                  Primary Guardian Mobile no</label>
+                  Primary Guardian Mobile no *</label>
                 <div class="mt-2">
                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input type="text" 
+                    <input type="text" required
                     id="gd_primary_contactnumber" 
                     bind:value={profiledata.primary_contact_number}
                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" 
@@ -276,7 +285,7 @@ const submitProfile= ()=>{
               <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
             </div>
     
-            <div class="col-span-full">
+            <!-- <div class="col-span-full">
               <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Photo</label>
               <div class="mt-2 flex items-center gap-x-3">
                 <svg class="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -305,11 +314,11 @@ const submitProfile= ()=>{
                   <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
     
-        <div class="border-b border-gray-900/10 pb-10">
+        <!-- <div class="border-b border-gray-900/10 pb-10">
           <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
          
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -364,7 +373,7 @@ const submitProfile= ()=>{
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
     </div>
   
     <div class="mt-6 flex items-center justify-end gap-x-6">

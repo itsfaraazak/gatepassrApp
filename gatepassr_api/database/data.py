@@ -71,13 +71,10 @@ from psycopg2.extras import RealDictCursor
 
 def getdata_Json(query):
     cursor, conn = db.connect()
-    
-
     cur = conn.cursor(cursor_factory=RealDictCursor)
     query_sql = query
     cur.execute(query_sql)
     results = cur.fetchall()
-    print(results)
     disconnect(cursor, conn)
     return results
 # get_request()

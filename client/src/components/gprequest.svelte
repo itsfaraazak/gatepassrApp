@@ -5,10 +5,13 @@
     export let grades
     export let min_date
     export let  profiledata
-    
+    var date = new Date();
+
+    s: minimum_date= ( date.getFullYear() + "-"+("0" + (date.getMonth() + 1)).slice(-2) + "-"+ ("0" + date.getDate()).slice(-2) + "T" + ("0" + date.getHours() ).slice(-2) + ":"+ ("0" + date.getMinutes()).slice(-2) );
+   
 </script>
     
-    <form action = "{gatepassrAPIurl}/submit/gatepassrequest" method="POST" class="mx-4 mt-4 mb-4 lg:flex lg:items-center lg:justify-between">
+    <form action = "{gatepassrAPIurl}/submit/gatepassrequest" method="POST" use:enhance class="mx-4 mt-4 mb-4 lg:flex lg:items-center lg:justify-between">
         <div class="space-y-4">
         <div class="border-b border-gray-900/10 pb-5">
             <h1 class="text-3xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Request for a gatepass</h1>
@@ -54,7 +57,7 @@
             <input class="mt-4 mx-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             type="datetime-local"
             id="exit-time"
-            name="exit-time" min={min_date} bind:value="{min_date}"/>
+            name="exit-time" min={minimum_date} bind:value="{min_date}"/>
             </div>
             <!-- carpool radio box + car number -->
             

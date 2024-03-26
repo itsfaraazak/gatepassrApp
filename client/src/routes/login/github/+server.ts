@@ -9,7 +9,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 	const url = await github.createAuthorizationURL(state, {
 		scopes: ["user:email"]
 	});
-
+    
 	event.cookies.set("github_oauth_state", state, {
 		path: "/",
 		secure: import.meta.env.PROD,

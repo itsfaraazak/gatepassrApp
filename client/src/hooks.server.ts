@@ -30,5 +30,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     console.log(user);
 	event.locals.session = session;
     console.log(session);
+	event.locals.user_email = "itsyasmeenkhan@gmail.com";
+	event.locals.roleid ="1";
 	return resolve(event);
 };

@@ -14,28 +14,58 @@ def sumbit_request():
     form_data = {
         "student_type": request.form["student_type"],
         "student_list": request.form["student_list"],
+        "student_count": request.form["student_count"],
+        "student_array": request.form["student_array"],
         "exit_time": request.form["exit-time"],
         "guardian_name": request.form["name-guardian"],
         "guardian_relation": request.form["guardian-relation"],
         "guardian_email": request.form["email"],
         "reason_for_gatepass": request.form["about"]
     }
-    studentdata = form_data["student_list"].split(",")
-    query = f"""CALL insert_data('{studentdata[0]}', '{studentdata[1]}', '', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}');"""
+    studentdataArray = form_data["student_array"].split(",")
+    perStudentSublist = [studentdataArray[x:x+3] for x in range(0, len(studentdataArray), 3)]
+    number_of_students = len(studentdataArray)
+    #print(list_count)
+    # Working implementation, but slower by design- sends x queries depending on the no. of children
+    """ for i in perStudentSublist:
+        query = f"CALL insert_data('{i[0]}', '{i[1]}', '{i[2]}', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}');"
+        try:
+            print(query)
+            #data.query_db(query, True)
+            data.commandquery(query)
+            #return redirect(current_app.config['FRONTEND_URL']+"/request-a-gatepass")
+            #"http://localhost:5173")
+        except:
+            pass """
+    # Faster implementation (hopefully)
+    query = """INSERT INTO public.requests (student_name, student_email, student_grade, student_type_id, exit_time, guardian_name, guardian_relation, guardian_email, reason) VALUES"""
+    for i in perStudentSublist:
+        query += f"""('{i[0]}', '{i[1]}', '{i[2]}', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}'),"""
 
-    #query = f"""CALL insert_data('Yassss', 'studentEmail@example.com', '{form_data["grade"]}', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}');"""
-# update stored procedure for processing guardian details and email + reason
+    query = query[:-1]
     try:
-        print(query)
-        #data.query_db(query, True)
-        data.commandquery(query)
-        print(form_data)
-        return redirect(current_app.config['FRONTEND_URL']+"/status-console")
+            print(query)
+            #data.query_db(query, True)
+            data.commandquery(query)
+            #return redirect(current_app.config['FRONTEND_URL']+"/request-a-gatepass")
             #"http://localhost:5173")
     except:
-        print(query)
-        print(form_data)
-        return redirect(current_app.config['FRONTEND_URL'] +"/status-console")
+        pass
+
+    return redirect(current_app.config['FRONTEND_URL'] +"/request-a-gatepass")
+
+
+
+"""     if(list_count > 0):
+        #counter =studentdataArray.count/3
+        for i in range(0,list_count):
+            studentdata_1 = studentdataArray[i:3]
+            #studentdata = studentdata
+            #print(studentdata_1)
+            query = f"CALL insert_data('{studentdata_1[0]}', '{studentdata_1[1]}', '{studentdata_1[2]}', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}');
+            
+ """    #query = f"""CALL insert_data('Yassss', 'studentEmail@example.com', '{form_data["grade"]}', {int(form_data["student_type"])}, '{form_data["exit_time"]}', '{form_data["guardian_name"]}', '{form_data['guardian_relation']}', '{form_data['guardian_email']}', '{form_data['reason_for_gatepass']}');"""
+# update stored procedure for processing guardian details and email + reason
 
 @bp.route("/approverequest", methods=["POST"])
 def approve_gatepass_request():
@@ -73,7 +103,6 @@ def submit_profile():
     else:
         query = f"""CALL profiledataupdate('{profile_data["guardian_id"]}','{profile_data["primary_guardian_email"]}','{profile_data["primary_contact_number"]}','{profile_data["secondary_guardian_email"]}','{profile_data["secondary_contact_number"]}','{profile_data["created_by"]}','{jdata}')"""
 
-    print(query) 
     data.commandquery(query)
     return  "Profile saved"
     #except:
@@ -101,21 +130,13 @@ def isauthorized():
 
 @bp.route("/profile", methods = ["POST"])
 def get_profile():
-    #return {"guardian_id": 10, "primary_guardian_email": "itsyasmeenkhan@gmail.com", "secondary_guardian_email": "second@abc.com", "primary_contactnumber": "12345", "seconday_contactnumber": "789456123", "student_list": [{"grade": 6, "student_name": "first", "student_email": "first@abc.com"}]}
-    #return {"guardian_id": "10"}
     userdata =json.loads(request.data)
     useremail= userdata["user_email"]
-    print(useremail)
     query = f"""Select guardian_id, primary_guardian_email ,secondary_guardian_email,primary_contactnumber,seconday_contactnumber, student_list from guardian Where created_by='{useremail}' order by created_on  desc Limit 1;"""
-    print(query)
    
     dbdata =data.getdata_Json(query)
 
     response = json.loads(json.dumps(dbdata))
-    
-    print(response)
-    print(type(response))
-    
     return send_request(response)
     
 def send_request(data):
@@ -127,17 +148,7 @@ def send_request(data):
 def get_user_requests():
     userdata =json.loads(request.data)
     useremail= userdata["user_email"]
-    query = f"""SELECT req.student_name,
-      req.student_email, 
-      student_grade, 
-      req.student_type_id, 
-      exit_time,
-      st_type.student_type,
-      approved_by,
-      req.request_id
-    FROM requests req
-    join public.student_type st_type
-    on req.student_type_id = st_type.student_type_id
-    WHERE guardian_email='{useremail}' OR student_email='{useremail}'
-    ORDER BY exit_time DESC;""" 
+    print("flask==" +useremail)
+    query=f"""SELECT * FROM get_userrequests('{useremail}')"""
+    print(query)
     return send_request(data.query_db(query))

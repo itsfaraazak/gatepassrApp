@@ -71,7 +71,7 @@ model user_accounts {
 
 model User {
   id            String    @id
-  provider_id   String    @unique
+  provider_id   String       @unique
   username      String
   email         String?
   provider_name String?

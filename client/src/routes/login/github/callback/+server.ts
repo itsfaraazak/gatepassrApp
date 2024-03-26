@@ -36,7 +36,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			}
 		});
 		const githubUserEmail: GitHubUser = await githubUserResponseEmail.json();
-
+       
 		// Replace this with your own DB client.
 		//const existingUser = await db.table("user").where("github_id", "=", githubUser.id).get();
 		const existingUser = await prisma.user.findUnique({

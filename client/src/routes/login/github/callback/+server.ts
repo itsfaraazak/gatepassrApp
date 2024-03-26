@@ -30,11 +30,18 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
+		const githubUserResponseEmail = await fetch("https://api.github.com/user/emails", {
+			headers: {
+				Authorization: `Bearer ${tokens.accessToken}`
+			}
+		});
+		const githubUserEmail: GitHubUser = await githubUserResponseEmail.json();
+
 		// Replace this with your own DB client.
 		//const existingUser = await db.table("user").where("github_id", "=", githubUser.id).get();
 		const existingUser = await prisma.user.findUnique({
 			where: {
-				github_id: githubUser.id,
+				provider_id: githubUser.id,
 			},
 		})
 
@@ -58,10 +65,11 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			await prisma.user.create({
 				data: {
 					id: userId,
-					github_id: githubUser.id,
+					provider_id: githubUser.id,
 					//github_id: 1234555,
 					username: githubUser.login,
 					//username: 'Userrrrr',
+					//email: githubUserEmail,
 				},
 			})
 

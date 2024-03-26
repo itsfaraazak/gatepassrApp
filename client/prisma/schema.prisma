@@ -70,15 +70,18 @@ model user_accounts {
 }
 
 model User {
-  id       String    @id
-  sessions Session[]
-  github_id Int @unique
-  username  String
+  id            String    @id
+  provider_id   Int       @unique
+  //(map: "User_github_id_key")
+  username      String
+  email         String?
+  provider_name String?
+  sessions      Session[]
 }
 
 model Session {
   id        String   @id
   userId    String
   expiresAt DateTime
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -21,8 +21,12 @@ const config = {
 			},
 		paths: {
 			// @ts-ignore
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+			//base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+			base: ''
 			
+		},
+		prerender: {
+			handleHttpError: 'warn'
 		}
 	}
 };

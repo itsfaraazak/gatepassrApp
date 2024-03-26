@@ -68,3 +68,20 @@ model user_accounts {
   created_at DateTime? @db.Timestamp(6)
   last_login DateTime? @db.Timestamp(6)
 }
+
+model User {
+  id            String    @id
+  provider_id   Int       @unique
+  //(map: "User_github_id_key")
+  username      String
+  email         String?
+  provider_name String?
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

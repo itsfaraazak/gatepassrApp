@@ -7,7 +7,8 @@
     import {signIn, signOut} from "@auth/sveltekit/client"
     import toast , { Toaster } from 'svelte-french-toast';
 	  export let data: LayoutData;
-    
+    console.log(data)
+
     let useremail=""
 
     function toggleHamburgerMenu() {
@@ -53,20 +54,23 @@
         <a href="{base}/about-us" class="text-sm font-semibold leading-6 text-gray-900">About us</a>
       </div>
       <div class="hidden  px-1 lg:flex lg:flex-1 lg:justify-end">
-          {#if data.session}
+<!--           {#if data?.username}
           <span>
             
-              <strong>{data.session.user?.name ?? "User"}</strong><br/>
+              <strong>{data?.username ?? "User"}</strong><br/>
               <a href="{base}/profile" class="text-sm font-semibold leading-6 text-gray-900">Profile</a><br/>
               <a href="{base}/auth/signout" class="text-sm font-semibold leading-6 text-gray-900">Sign out</a>
               
              
           </span>
-          {:else}
-            <a href="{base}/auth/sign-in" class="text-sm font-semibold leading-6 text-gray-900">
+ -->     
+            <a href="{base}/login" class="text-sm font-semibold leading-6 text-gray-900">
               Log in 
               <span aria-hidden="true">&rarr;</span></a>
-          {/if}
+              <a href="{base}/protected" class="text-sm font-semibold leading-6 text-gray-900">
+                Sign out
+                <span aria-hidden="true">&rarr;</span></a>
+  
       </div>
       
     </nav>
@@ -97,21 +101,19 @@
                </div>
             <div class="py-6">
               <span>{useremail}</span>
-              {#if data.session}
-              <div class="">
-                  <strong>{data.session.user?.name ?? "User"}</strong>
+             
+              <!-- <div class="">
+                  <strong>{data?.username ?? "User"}</strong>
                   <a href="{base}/profile" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                     Profile</a>
            
                   <button on:click={() => signOut()} class="button -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign out</button>
-              </div>
-              {:else}
-                <a href="{base}/auth/sign-in" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+              </div> -->
+                <a href="{base}/login" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                   Log in 
                 <span aria-hidden="true">&rarr;</span></a>
-                <a href="{base}/auth/sign-up" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign Up</a>
+                <a href="{base}/protected" on:click={toggleHamburgerMenu} class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Sign out</a>
 
-              {/if}
             </div>
           </div>
         </div>

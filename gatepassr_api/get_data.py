@@ -51,6 +51,32 @@ WHERE approved_by IS NULL
 AND exit_time >= DATE(now())
 ORDER BY exit_time ASC;"""
     return send_request(data.query_db(query_requests))
+
+
+@bp.route("/fancy", methods = ["GET"])
+def request_fancy():
+    query_requests = """SELECT req.student_name,
+      req.student_email, 
+      student_grade, 
+      req.student_type_id, 
+      exit_time,
+    st_type.student_type,
+    approved_by,
+    req.request_id
+FROM requests req
+join public.student_type st_type
+on req.student_type_id = st_type.student_type_id
+WHERE approved_by IS NULL
+AND exit_time >= DATE(now())
+ORDER BY exit_time ASC;"""
+
+    dbdata =data.getdata_Json(query_requests)
+    print(dbdata)
+
+    response = json.loads(json.dumps(dbdata, indent=4, sort_keys=True, default=str))
+    print(response)
+    return send_request(response)
+
     
 
 @bp.route("/todaysrequests", methods = ["GET"])

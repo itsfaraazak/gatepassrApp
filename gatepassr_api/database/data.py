@@ -78,3 +78,12 @@ def getdata_Json(query):
     disconnect(cursor, conn)
     return results
 # get_request()
+
+def get_dict_data(query):
+    cursor, conn = db.connect()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    query_sql = query
+    cur.execute(query_sql)
+    results = cur.fetchall()
+    disconnect(cursor, conn)
+    return results

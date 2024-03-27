@@ -16,6 +16,9 @@
 	//Init data handler - CLIENT
 	const handler = new DataHandler(data, { rowsPerPage: 5 });
 	const rows = handler.getRows();
+
+	const selected = handler.getSelected()
+	const isAllSelected = handler.isAllSelected()
 </script>
 
 <div class=" overflow-x-auto space-y-4">
@@ -25,9 +28,17 @@
 		<RowsPerPage {handler} />
 	</header>
 	<!-- Table -->
-	<table class="table table-hover table-compact w-full table-auto">
+	<table class="table table-hover table-comfortable w-full table-auto">
 		<thead>
 			<tr>
+				<th class="selection">
+                    <input
+						class="checkbox"
+                        type="checkbox"
+                        on:click={() => handler.selectAll({ selectBy: 'request_id' })}
+                        checked={$isAllSelected}
+                    />
+				</th>
 				<ThSort {handler} orderBy="student_name">Student</ThSort>
 				<ThSort {handler} orderBy="student_grade">Grade</ThSort>
 				<ThSort {handler} orderBy="approved_by">Status</ThSort>
@@ -36,24 +47,40 @@
 
 			</tr>
 			<tr>
+				<th class="selection" />
 				<ThFilter {handler} filterBy="student_name" />
 				<ThFilter {handler} filterBy="student_grade" />
                 <ThFilter {handler} filterBy="approved_by" />
 				<ThFilter {handler} filterBy="exit_time" />
+				<ThFilter {handler} filterBy="approved_by" />
 			</tr>
 		</thead>
 		<tbody>
 			{#each $rows as row}
-				<tr>
+				<tr class:active={$selected.includes(row.request_id)}>
+					<td class="selection">
+						<input
+							class="checkbox"
+							type="checkbox"
+							on:click={() => handler.select(row.request_id)}
+							checked={$selected.includes(row.request_id)}
+						/>
+					</td>
 					<td>{row.student_name}</td>
 					<td>{row.student_grade}</td>
 					<td>{row.approved_by}</td>
                     <td>{row.exit_time}</td>
                     <td>
                         {#if row.approved_by == null}
-                        <button name="btnapprove" type="button" id={row.request_id}>Approve</button>
+                        <button name="btnapprove" type="button" class="btn variant-filled" id={row.request_id}>
+							<span>(icon)</span>
+							<span>Approve</span>
+						</button>
                         {:else}
-                        <button name="btnreject" type="button" id={row.request_id}>Reject</button>
+                        <button name="btnreject" type="button" id={row.request_id}>
+							<span>(icon)</span>
+							<span>Reject</span>
+						</button>
                         {/if}
                     </td>
                     

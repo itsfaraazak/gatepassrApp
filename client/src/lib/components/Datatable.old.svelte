@@ -1,29 +1,24 @@
-<script lang="ts">
-
-    import ThSort from '$lib/components/ThSort.svelte';
+<script>
+	//Import local datatable components
+	import ThSort from '$lib/components/ThSort.svelte';
 	import ThFilter from '$lib/components/ThFilter.svelte';
 	import Search from '$lib/components/Search.svelte';
 	import RowsPerPage from '$lib/components/RowsPerPage.svelte';
 	import RowCount from '$lib/components/RowCount.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-    
-    import { reload } from '$lib/data/api';
 
-    import { DataHandler } from '@vincjo/datatables/remote';
-    import type { State, Row } from '@vincjo/datatables/remote';
+	//Load local data
+	import data from '$lib/data/api';
 
-    
+	//Import handler from SSD
+	import { DataHandler } from '@vincjo/datatables';
 
-    const handler = new DataHandler<Row>([], { rowsPerPage: 5, totalRows: 10 });
-    const rows = handler.getRows();
+	//Init data handler - CLIENT
+	const handler = new DataHandler(data, { rowsPerPage: 5 });
+	const rows = handler.getRows();
 
-    const selected = handler.getSelected()
+	const selected = handler.getSelected()
 	const isAllSelected = handler.isAllSelected()
-
-
-    handler.onChange((state: State) => reload(state));
-    handler.invalidate();
-
 </script>
 
 <div class=" overflow-x-auto space-y-4">
@@ -37,6 +32,12 @@
 		<thead>
 			<tr>
 				<th class="selection">
+                    <input
+						class="checkbox"
+                        type="checkbox"
+                        on:click={() => handler.selectAll({ selectBy: 'request_id' })}
+                        checked={$isAllSelected}
+                    />
 				</th>
 				<ThSort {handler} orderBy="student_name">Student</ThSort>
 				<ThSort {handler} orderBy="student_grade">Grade</ThSort>

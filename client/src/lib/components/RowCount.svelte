@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DataHandler } from '@vincjo/datatables';
+	import type { DataHandler } from '@vincjo/datatables/remote';
 	export let handler: DataHandler;
 	const rowCount = handler.getRowCount();
 </script>
